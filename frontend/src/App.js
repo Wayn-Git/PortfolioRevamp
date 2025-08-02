@@ -6,7 +6,11 @@ import axios from "axios";
 // Components
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import About from "./components/About";
 import Projects from "./components/Projects";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -30,9 +34,12 @@ const Portfolio = () => {
       <Header />
       <main>
         <Hero />
+        <About />
         <Projects />
-        {/* About, Skills, and Contact sections will be added in next iteration */}
+        <Skills />
+        <Contact />
       </main>
+      <Footer />
     </div>
   );
 };
