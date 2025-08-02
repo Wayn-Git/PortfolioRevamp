@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Github, Linkedin, MapPin, Clock, Send, CheckCircle, Sparkles } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Clock, Send, CheckCircle, Sparkles, AlertCircle } from 'lucide-react';
 import { personalInfo } from '../data/mock';
 
 const ContactForm = () => {
@@ -11,6 +11,8 @@ const ContactForm = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,17 +37,47 @@ const ContactForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock form submission - in real implementation, this would send to backend
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError('');
     
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+    try {
+      // Send email using EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: personalInfo.email
+      };
+
+      // Using backend email service
+      const response = await fetch('http://localhost:5000/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(templateParams),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 3000);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (err) {
+      setError('Failed to send message. Please try again or contact me directly via email.');
+      console.error('Email error:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -72,6 +104,12 @@ const ContactForm = () => {
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center space-x-3">
+          <AlertCircle size={20} className="text-red-600 dark:text-red-400 flex-shrink-0" />
+          <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+        </div>
+      )}
       <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Send Message</h3>
       
       <div className="grid sm:grid-cols-2 gap-8">
@@ -142,10 +180,22 @@ const ContactForm = () => {
       
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-3 hover:shadow-2xl hover:scale-105 group"
+        disabled={isLoading}
+        className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-3 hover:shadow-2xl hover:scale-105 group ${
+          isLoading ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
       >
-        <Send size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
-        <span>Send Message</span>
+        {isLoading ? (
+          <>
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <span>Sending...</span>
+          </>
+        ) : (
+          <>
+            <Send size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <span>Send Message</span>
+          </>
+        )}
       </button>
     </form>
   );
