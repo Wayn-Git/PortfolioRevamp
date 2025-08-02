@@ -1,60 +1,98 @@
-import React from 'react';
-import { Code, Database, Brain } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Code, Database, Brain, Sparkles } from 'lucide-react';
 import { skills } from '../data/mock';
 
-const SkillBar = ({ skill }) => (
-  <div className="mb-6">
-    <div className="flex justify-between items-center mb-2">
-      <span className="font-medium text-gray-900">{skill.name}</span>
-      <span className="text-sm text-gray-600">{skill.level}%</span>
-    </div>
-    <div className="w-full bg-gray-200 rounded-full h-2">
-      <div 
-        className="bg-gray-900 h-2 rounded-full transition-all duration-1000 ease-out"
-        style={{ width: `${skill.level}%` }}
-      ></div>
-    </div>
-  </div>
-);
+const SkillPill = ({ skill, delay = 0 }) => {
+  const [isVisible, setIsVisible] = useState(false);
 
-const SkillCategory = ({ title, skillList, icon: Icon, delay = 0 }) => (
-  <div 
-    className="bg-white rounded-2xl border border-gray-100 p-8 hover:border-gray-200 transition-all duration-300 hover:shadow-lg"
-    style={{ animationDelay: `${delay}ms` }}
-  >
-    <div className="flex items-center space-x-3 mb-6">
-      <div className="p-3 bg-gray-100 rounded-lg">
-        <Icon size={24} className="text-gray-700" />
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <div 
+      className={`inline-flex items-center space-x-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 rounded-full hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 hover:shadow-md hover:scale-105 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+      <span className="font-medium text-gray-900 dark:text-gray-100">{skill.name}</span>
+    </div>
+  );
+};
+
+const SkillCategory = ({ title, skillList, icon: Icon, delay = 0 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById(`skill-category-${title.toLowerCase()}`);
+    if (element) observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [title]);
+
+  return (
+    <div 
+      id={`skill-category-${title.toLowerCase()}`}
+      className={`bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="flex items-center space-x-3 mb-8">
+        <div className="p-3 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-xl group-hover:scale-110 transition-transform duration-300">
+          <Icon size={28} className="text-gray-700 dark:text-gray-300" />
+        </div>
+        <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
       </div>
-      <h3 className="text-2xl font-semibold text-gray-900">{title}</h3>
+      
+      <div className="flex flex-wrap gap-3">
+        {skillList.map((skill, index) => (
+          <SkillPill 
+            key={index} 
+            skill={skill} 
+            delay={isVisible ? index * 100 : 0}
+          />
+        ))}
+      </div>
     </div>
-    
-    <div className="space-y-4">
-      {skillList.map((skill, index) => (
-        <SkillBar key={index} skill={skill} />
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-24 bg-gray-50">
+    <section id="skills" className="py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-light text-gray-900 mb-6">
-            Skills & Technologies
+          <div className="inline-flex items-center space-x-2 bg-white dark:bg-gray-800 px-6 py-2 rounded-full border border-gray-200 dark:border-gray-700 mb-6 hover:shadow-md transition-all duration-300">
+            <Sparkles size={20} className="text-purple-600 dark:text-purple-400 animate-pulse" />
+            <span className="text-gray-600 dark:text-gray-400 font-medium">Skills & Technologies</span>
+          </div>
+          
+          <h2 className="text-4xl sm:text-5xl font-light text-gray-900 dark:text-gray-100 mb-6 animate-fade-in-up">
+            Technical Expertise
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             A comprehensive toolkit for building intelligent systems, from foundational programming 
             languages to advanced machine learning frameworks.
           </p>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8 mb-16">
           
           {/* Programming Languages */}
           <SkillCategory
@@ -81,25 +119,36 @@ const Skills = () => {
           />
         </div>
 
-        {/* Additional Information */}
-        <div className="mt-16 text-center">
-          <div className="bg-white rounded-2xl border border-gray-100 p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+        {/* Learning Section */}
+        <div className="text-center">
+          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-3xl border border-gray-100 dark:border-gray-700 p-12 max-w-5xl mx-auto hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl">
+                <Brain size={32} className="text-purple-600 dark:text-purple-400" />
+              </div>
+            </div>
+            
+            <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
               Always Learning
             </h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-8 text-lg max-w-3xl mx-auto">
               The field of machine learning evolves rapidly, and I'm committed to staying at the 
-              forefront of technological advancement. Currently exploring cutting-edge areas like 
-              transformer architectures, reinforcement learning, and MLOps best practices.
+              forefront of technological advancement. Currently exploring cutting-edge areas in AI and ML.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {['Transformers', 'MLOps', 'Docker', 'Kubernetes', 'PyTorch', 'FastAPI'].map((tech) => (
-                <span 
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {['Transformers', 'MLOps', 'Docker', 'Kubernetes', 'PyTorch', 'FastAPI'].map((tech, index) => (
+                <div 
                   key={tech}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium border border-gray-200"
+                  className="group cursor-pointer"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {tech}
-                </span>
+                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-3 rounded-xl font-medium text-center hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-lg hover:scale-105 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+                    <span className="text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+                      {tech}
+                    </span>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
