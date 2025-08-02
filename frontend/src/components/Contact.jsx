@@ -236,10 +236,10 @@ const Contact = () => {
           <div className="space-y-8">
             
             {/* Contact Details */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-10 border border-gray-100 dark:border-gray-600">
+                       <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
               <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Get in Touch</h3>
               
-              <div className="space-y-8">
+                          <div className="space-y-8">
                 {[
                   { icon: Mail, label: 'Email', value: personalInfo.email, action: openEmail },
                   { icon: MapPin, label: 'Location', value: 'Available for remote work worldwide', action: null },
@@ -268,9 +268,8 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-10 border border-gray-100 dark:border-gray-600">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
               <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Connect</h3>
-              
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { icon: Github, label: 'GitHub', action: () => openLink(personalInfo.github) },
@@ -294,9 +293,9 @@ const Contact = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-20">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-white dark:text-gray-900 rounded-3xl p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-            <h3 className="text-4xl font-semibold mb-6">
+ <div className="text-center mt-20">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-full sm:max-w-2xl mx-auto">
+            <h3 className="text-4xl font-semibold mb-6 text-gray-100 dark:text-gray-900">
               Ready to Start Your Next Project?
             </h3>
             <p className="text-gray-300 dark:text-gray-600 text-xl mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -305,7 +304,7 @@ const Contact = () => {
             </p>
             <button
               onClick={openEmail}
-              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-10 py-5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 font-medium text-lg hover:scale-105 hover:shadow-lg"
+              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-6 sm:px-10 py-4 sm:py-5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg"
             >
               Start a Conversation
             </button>
