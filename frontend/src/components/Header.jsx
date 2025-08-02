@@ -7,6 +7,20 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setIsMenuVisible(true);
+      setIsAnimating(true);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => setIsMenuVisible(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobileMenuOpen]);
 
 useEffect(() => {
   const handleScroll = () => {
@@ -112,30 +126,46 @@ useEffect(() => {
           </div>
         </div>
 
-         {/* Mobile Navigation */}
-    {isMobileMenuOpen && (
-<div
-  className={`md:hidden fixed top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 shadow-lg transition-all duration-300 transform ${
-    isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-  }`}
->
-        <nav className="flex flex-col space-y-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-left text-gray-700 dark:text-gray-300 hover:text-purple-700 dark:hover:text-purple-400 transition-colors duration-200 font-medium px-2 py-2 text-base rounded-md"
-            >
-              {item.label}
-            </button>
-          ))}
-          <button
-            onClick={handleCVDownload}
-            className="flex items-center space-x-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200 w-fit mt-2 text-sm"
-          >
-            <Download size={14} />
-            <span>Download CV</span>
-          </button>
+         {/* Mobile Navigation */
+         }
+    {isMenuVisible && (
+      <div 
+        className={`md:hidden fixed top-16 left-0 right-0 transition-all duration-300 ease-in-out ${
+          isAnimating ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+        }`}
+      >
+        <nav className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <div className="flex flex-col space-y-1">
+              {navItems.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    scrollToSection(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 
+                    hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 
+                    font-medium text-lg opacity-0 animate-fadeIn`}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {item.label}
+                </button>
+              ))}
+              
+              <button
+                onClick={handleCVDownload}
+                className={`w-full mt-2 flex items-center justify-center space-x-2 
+                  bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 
+                  px-4 py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 
+                  transition-all duration-200 opacity-0 animate-fadeIn`}
+                style={{ animationDelay: `${navItems.length * 50}ms` }}
+              >
+                <Download size={18} />
+                <span>Download CV</span>
+              </button>
+            </div>
+          </div>
         </nav>
       </div>
     )}
