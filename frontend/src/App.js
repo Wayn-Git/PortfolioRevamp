@@ -3,6 +3,9 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
+// Context
+import { ThemeProvider } from "./context/ThemeContext";
+
 // Components
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -46,13 +49,15 @@ const Portfolio = () => {
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Portfolio />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Portfolio />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
