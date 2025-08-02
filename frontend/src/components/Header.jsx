@@ -8,14 +8,15 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
+useEffect(() => {
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 0);
+    if (isMobileMenuOpen) setIsMobileMenuOpen(false);  // Close mobile menu on scroll
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [isMobileMenuOpen]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -48,7 +49,7 @@ const Header = () => {
 <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
   isScrolled 
     ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 shadow-sm'
-    : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 shadow-sm'
+    : 'bg-transparent dark:bg-transparent'  // Changed to be transparent when not scrolled
 }`}>
 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
     <div className="flex justify-between items-center h-16">
@@ -113,10 +114,11 @@ const Header = () => {
 
          {/* Mobile Navigation */}
     {isMobileMenuOpen && (
-      <div
-        className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-4 shadow-lg transition-all duration-300 transform animate-slide-down"
-        style={{ borderRadius: '0 0 1rem 1rem' }}
-      >
+<div
+  className={`md:hidden fixed top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 shadow-lg transition-all duration-300 transform ${
+    isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+  }`}
+>
         <nav className="flex flex-col space-y-2">
           {navItems.map((item) => (
             <button

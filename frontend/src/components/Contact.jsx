@@ -211,11 +211,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+<section id="contact" className="py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden"> {/* Added overflow-hidden */}
         
         {/* Section Header */}
-        <div className="text-center mb-16">
+       <div className="text-center mb-16 px-4"> {/* Added px-4 */}
           <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-6 hover:shadow-md transition-all duration-300">
             <Sparkles size={20} className="text-purple-600 dark:text-purple-400 animate-pulse" />
             <span className="text-gray-600 dark:text-gray-400 font-medium">Let's Connect</span>
@@ -230,10 +230,10 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 px-4"> {/* Added px-4, reduced gap on mobile */}
           
           {/* Contact Information */}
-          <div className="space-y-8">
+                 <div className="space-y-8 w-full max-w-lg mx-auto">
             
             {/* Contact Details */}
                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
@@ -288,13 +288,14 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
+        <div className="w-full max-w-lg mx-auto"> {/* Added width constraints */}
           <ContactForm />
         </div>
+      </div>
 
         {/* Call to Action */}
- <div className="text-center mt-20">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-full sm:max-w-2xl mx-auto">
+  <div className="text-center mt-20 px-4"> {/* Added px-4 */}
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-3xl mx-auto"> {/* Adjusted max-width */}
             <h3 className="text-4xl font-semibold mb-6 text-gray-100 dark:text-gray-900">
               Ready to Start Your Next Project?
             </h3>
