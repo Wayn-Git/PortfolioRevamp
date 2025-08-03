@@ -82,14 +82,14 @@ const ContactForm = () => {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-10 text-center animate-bounce-in">
-        <div className="mb-6">
-          <div className="p-4 bg-green-100 dark:bg-green-900/30 rounded-full w-fit mx-auto">
-            <CheckCircle size={48} className="text-green-600 dark:text-green-400" />
+      <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-10 text-center animate-bounce-in">
+        <div className="mb-4 sm:mb-6">
+          <div className="p-3 sm:p-4 bg-green-100 dark:bg-green-900/30 rounded-full w-fit mx-auto">
+            <CheckCircle size={40} className="sm:w-12 sm:h-12 text-green-600 dark:text-green-400" />
           </div>
         </div>
-        <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Message Sent!</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-lg">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Message Sent!</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
           Thank you for reaching out. I'll get back to you as soon as possible.
         </p>
       </div>
@@ -100,21 +100,21 @@ const ContactForm = () => {
     <form 
       id="contact-form"
       onSubmit={handleSubmit} 
-      className={`bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-10 space-y-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-2xl ${
+      className={`bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 lg:p-10 space-y-6 sm:space-y-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-2xl ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
       {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center space-x-3">
-          <AlertCircle size={20} className="text-red-600 dark:text-red-400 flex-shrink-0" />
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 sm:p-4 flex items-center space-x-2 sm:space-x-3">
+          <AlertCircle size={18} className="sm:w-5 sm:h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
           <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
         </div>
       )}
-      <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Send Message</h3>
+      <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Send Message</h3>
       
-      <div className="grid sm:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
             Name
           </label>
           <input
@@ -124,13 +124,13 @@ const ContactForm = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-6 py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500"
+            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
             placeholder="Your full name"
           />
         </div>
         
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
             Email
           </label>
           <input
@@ -140,14 +140,14 @@ const ContactForm = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-6 py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500"
+            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
             placeholder="your.email@example.com"
           />
         </div>
       </div>
       
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Subject
         </label>
         <input
@@ -157,23 +157,23 @@ const ContactForm = () => {
           required
           value={formData.subject}
           onChange={handleChange}
-          className="w-full px-6 py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
           placeholder="Project collaboration, job opportunity, etc."
         />
       </div>
       
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
           Message
         </label>
         <textarea
           id="message"
           name="message"
           required
-          rows={6}
+          rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-6 py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
           placeholder="Tell me about your project or how we can work together..."
         />
       </div>
@@ -181,18 +181,18 @@ const ContactForm = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-3 hover:shadow-2xl hover:scale-105 group ${
+        className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-2 sm:space-x-3 hover:shadow-2xl hover:scale-105 group text-sm sm:text-base ${
           isLoading ? 'opacity-50 cursor-not-allowed' : ''
         }`}
       >
         {isLoading ? (
           <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
             <span>Sending...</span>
           </>
         ) : (
           <>
-            <Send size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <Send size={18} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" />
             <span>Send Message</span>
           </>
         )}
@@ -211,55 +211,55 @@ const Contact = () => {
   };
 
   return (
-<section id="contact" className="py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden"> {/* Added overflow-hidden */}
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
         
         {/* Section Header */}
-       <div className="text-center mb-16 px-4"> {/* Added px-4 */}
-          <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={20} className="text-purple-600 dark:text-purple-400 animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-400 font-medium">Let's Connect</span>
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4">
+          <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
+            <Sparkles size={16} className="sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 animate-pulse" />
+            <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Let's Connect</span>
           </div>
           
-          <h2 className="text-4xl sm:text-5xl font-light text-gray-900 dark:text-gray-100 mb-6 animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 animate-fade-in-up">
             Let's Work Together
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
             Have a project in mind? Looking for a machine learning developer? 
             I'd love to hear from you and discuss how we can bring your ideas to life.
           </p>
         </div>
 
-             <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 px-4"> {/* Added px-4, reduced gap on mobile */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 px-4">
           
           {/* Contact Information */}
-                 <div className="space-y-8 w-full max-w-lg mx-auto">
+          <div className="space-y-6 sm:space-y-8 w-full max-w-lg mx-auto">
             
             {/* Contact Details */}
-                       <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
-              <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Get in Touch</h3>
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
+              <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Get in Touch</h3>
               
-                          <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 {[
                   { icon: Mail, label: 'Email', value: personalInfo.email, action: openEmail },
                   { icon: MapPin, label: 'Location', value: 'Available for remote work worldwide', action: null },
                   { icon: Clock, label: 'Response Time', value: 'Usually within 24 hours', action: null }
                 ].map(({ icon: Icon, label, value, action }) => (
-                  <div key={label} className="flex items-center space-x-6 group">
-                    <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-600">
-                      <Icon size={28} className="text-purple-600 dark:text-purple-400" />
+                  <div key={label} className="flex items-center space-x-4 sm:space-x-6 group">
+                    <div className="p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-600">
+                      <Icon size={24} className="sm:w-7 sm:h-7 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-gray-100 text-lg">{label}</p>
+                      <p className="font-medium text-gray-900 dark:text-gray-100 text-base sm:text-lg">{label}</p>
                       {action ? (
                         <button 
                           onClick={action}
-                          className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300"
+                          className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 text-sm sm:text-base"
                         >
                           {value}
                         </button>
                       ) : (
-                        <p className="text-gray-600 dark:text-gray-400">{value}</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{value}</p>
                       )}
                     </div>
                   </div>
@@ -268,9 +268,9 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
-              <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Connect</h3>
-              <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
+              <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Connect</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { icon: Github, label: 'GitHub', action: () => openLink(personalInfo.github) },
                   { icon: Linkedin, label: 'LinkedIn', action: () => openLink(personalInfo.linkedin) }
@@ -278,34 +278,34 @@ const Contact = () => {
                   <button
                     key={label}
                     onClick={action}
-                    className="flex items-center space-x-4 bg-white dark:bg-gray-800 px-6 py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-lg hover:scale-105 group"
+                    className="flex items-center space-x-3 sm:space-x-4 bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-lg hover:scale-105 group"
                   >
-                    <Icon size={24} className="text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
-                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">{label}</span>
+                    <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 text-sm sm:text-base">{label}</span>
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
-        <div className="w-full max-w-lg mx-auto"> {/* Added width constraints */}
-          <ContactForm />
+          <div className="w-full max-w-lg mx-auto">
+            <ContactForm />
+          </div>
         </div>
-      </div>
 
         {/* Call to Action */}
-  <div className="text-center mt-20 px-4"> {/* Added px-4 */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-3xl mx-auto"> {/* Adjusted max-width */}
-            <h3 className="text-4xl font-semibold mb-6 text-gray-100 dark:text-gray-900">
+        <div className="text-center mt-16 sm:mt-20 lg:mt-24 px-4">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-8 lg:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-3xl mx-auto">
+            <h3 className="text-3xl sm:text-4xl font-semibold mb-4 sm:mb-6 text-gray-100 dark:text-gray-900">
               Ready to Start Your Next Project?
             </h3>
-            <p className="text-gray-300 dark:text-gray-600 text-xl mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-gray-300 dark:text-gray-600 text-lg sm:text-xl mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
               Whether you need a custom ML model, data analysis, or help with your AI strategy, 
               I'm here to help turn your vision into reality.
             </p>
             <button
               onClick={openEmail}
-              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-6 sm:px-10 py-4 sm:py-5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg"
+              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-6 sm:px-10 py-3 sm:py-5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg"
             >
               Start a Conversation
             </button>
