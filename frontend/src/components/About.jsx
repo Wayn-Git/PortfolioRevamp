@@ -24,11 +24,11 @@ const StatCard = ({ stat, delay = 0 }) => {
   return (
     <div 
       id={`stat-${stat.label.replace(/\s+/g, '-')}`}
-      className={`text-center p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group ${
+      className={`text-center p-4 sm:p-6 lg:p-8 bg-gray-100 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
-      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
         {stat.value}
       </div>
       <div className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">{stat.label}</div>
@@ -58,7 +58,7 @@ const ExperienceCard = ({ exp, delay = 0 }) => {
   return (
     <div 
       id={`experience-${exp.id}`}
-      className={`bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
+      className={`bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
@@ -67,7 +67,7 @@ const ExperienceCard = ({ exp, delay = 0 }) => {
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{exp.title}</h3>
           <p className="text-gray-600 dark:text-gray-400 font-medium text-base sm:text-lg">{exp.company}</p>
         </div>
-        <span className="px-3 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-xs sm:text-sm font-medium border border-purple-200 dark:border-purple-700 self-start">
+        <span className="px-3 sm:px-4 py-1 sm:py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-lg text-xs sm:text-sm font-medium border border-emerald-200 dark:border-emerald-700 self-start">
           {exp.period}
         </span>
       </div>
@@ -77,8 +77,8 @@ const ExperienceCard = ({ exp, delay = 0 }) => {
       <div className="space-y-2 sm:space-y-3">
         {exp.achievements.map((achievement, index) => (
           <div key={index} className="flex items-start space-x-2 sm:space-x-3 group">
-            <div className="p-1 bg-green-100 dark:bg-green-900/30 rounded-full mt-1 flex-shrink-0">
-              <TrendingUp size={12} className="sm:w-3.5 sm:h-3.5 text-green-600 dark:text-green-400" />
+            <div className="p-1 bg-emerald-100 dark:bg-emerald-900/30 rounded-full mt-1 flex-shrink-0">
+              <TrendingUp size={12} className="sm:w-3.5 sm:h-3.5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <p className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-300 transition-colors duration-200 text-sm sm:text-base">
               {achievement}
@@ -92,14 +92,14 @@ const ExperienceCard = ({ exp, delay = 0 }) => {
 
 const About = () => {
   return (
-    <section id="about" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
+    <section id="about" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={16} className="sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">About Me</span>
+          <div className="inline-flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-700 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
+            <Sparkles size={16} className="sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+            <span className="text-gray-600 dark:text-gray-300 font-medium text-sm sm:text-base">About Me</span>
           </div>
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 animate-fade-in-up">
@@ -124,8 +124,8 @@ const About = () => {
           {/* About Text */}
           <div className="space-y-6 sm:space-y-8">
             <div className="flex items-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
-              <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-xl">
-                <User size={24} className="sm:w-7 sm:h-7 text-purple-600 dark:text-purple-400" />
+              <div className="p-2 sm:p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                <User size={24} className="sm:w-7 sm:h-7 text-slate-600 dark:text-slate-400" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100">My Journey</h3>
             </div>
@@ -142,8 +142,8 @@ const About = () => {
           {/* Philosophy */}
           <div className="space-y-6 sm:space-y-8">
             <div className="flex items-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
-              <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-xl">
-                <Target size={24} className="sm:w-7 sm:h-7 text-purple-600 dark:text-purple-400" />
+              <div className="p-2 sm:p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                <Target size={24} className="sm:w-7 sm:h-7 text-slate-600 dark:text-slate-400" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100">My Approach</h3>
             </div>
@@ -156,8 +156,8 @@ const About = () => {
               ].map(({ icon: Icon, title, description }, index) => (
                 <div key={title} className="group p-4 sm:p-6 bg-gray-50 dark:bg-gray-700 rounded-2xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                   <div className="flex items-center space-x-3 sm:space-x-4 mb-3">
-                    <div className="p-1.5 sm:p-2 bg-white dark:bg-gray-800 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                      <Icon size={18} className="sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400" />
+                    <div className="p-1.5 sm:p-2 bg-gray-50 dark:bg-gray-800 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                      <Icon size={18} className="sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-base sm:text-lg">{title}</h4>
                   </div>

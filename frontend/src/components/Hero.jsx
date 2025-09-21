@@ -30,9 +30,9 @@ const Hero = () => {
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-purple-200/20 to-blue-200/20 dark:from-purple-800/10 dark:to-blue-800/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute top-1/3 right-1/4 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-gradient-to-br from-pink-200/20 to-purple-200/20 dark:from-pink-800/10 dark:to-purple-800/10 rounded-full blur-3xl animate-float-delayed"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-28 h-28 sm:w-40 sm:h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-blue-200/20 to-cyan-200/20 dark:from-blue-800/10 dark:to-cyan-800/10 rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-slate-200/20 to-emerald-200/20 dark:from-slate-800/10 dark:to-emerald-800/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-1/3 right-1/4 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-gradient-to-br from-emerald-200/20 to-slate-200/20 dark:from-emerald-800/10 dark:to-slate-800/10 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-28 h-28 sm:w-40 sm:h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-slate-200/20 to-emerald-200/20 dark:from-slate-800/10 dark:to-emerald-800/10 rounded-full blur-3xl animate-float-slow"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center relative z-10">
@@ -44,7 +44,7 @@ const Hero = () => {
           <div className={`inline-flex items-center space-x-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 sm:px-6 py-2 rounded-full border border-gray-200/50 dark:border-gray-700/50 transition-all duration-1000 ${
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
-            <Sparkles size={14} className="sm:w-4 sm:h-4 text-purple-600 dark:text-purple-400 animate-pulse" />
+            <Sparkles size={14} className="sm:w-4 sm:h-4 text-emerald-600 dark:text-emerald-400 animate-pulse" />
             <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Hello, I'm</span>
           </div>
 
@@ -84,7 +84,7 @@ const Hero = () => {
                 style={{ animationDelay: `${800 + index * 100}ms` }}
                 aria-label={label}
               >
-                <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
+                <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" />
               </button>
             ))}
           </div>
@@ -95,7 +95,7 @@ const Hero = () => {
           }`}>
             <button
               onClick={scrollToProjects}
-              className="group inline-flex items-center space-x-2 sm:space-x-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-2xl font-medium text-base sm:text-lg"
+              className="group inline-flex items-center space-x-2 sm:space-x-3 bg-slate-800 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-slate-900 transition-all duration-300 hover:scale-105 hover:shadow-2xl font-medium text-base sm:text-lg"
             >
               <span>View My Work</span>
               <ArrowDown size={16} className="sm:w-5 sm:h-5 group-hover:translate-y-1 transition-transform duration-300" />
@@ -105,9 +105,9 @@ const Hero = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-gray-300 dark:border-gray-600 rounded-full flex justify-center backdrop-blur-sm">
-          <div className="w-1 h-2 sm:h-3 bg-gray-400 dark:bg-gray-500 rounded-full mt-1 sm:mt-2 animate-pulse"></div>
+      <div className="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 sm:w-7 sm:h-12 border-2 border-slate-400 dark:border-slate-600 rounded-full flex justify-center backdrop-blur-sm bg-white/50 dark:bg-gray-900/50">
+          <div className="w-1.5 h-3 sm:h-4 bg-slate-600 dark:bg-slate-400 rounded-full mt-2 sm:mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>

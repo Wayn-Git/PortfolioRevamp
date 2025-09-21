@@ -72,8 +72,8 @@ const Header = () => {
             className="font-semibold text-lg sm:text-xl cursor-pointer transition-all duration-300 hover:scale-105 group"
             onClick={() => scrollToSection('hero')}
           >
-            <span className="text-gray-900 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">Bilal</span>
-            <span className="text-gray-600 dark:text-gray-400 ml-1 group-hover:text-purple-500 dark:group-hover:text-purple-500 transition-colors duration-300">Rukundi</span>
+            <span className="text-gray-900 dark:text-gray-100 group-hover:text-slate-800 dark:group-hover:text-emerald-400 transition-colors duration-300">Bilal</span>
+            <span className="text-gray-600 dark:text-gray-400 ml-1 group-hover:text-slate-700 dark:group-hover:text-emerald-500 transition-colors duration-300">Rukundi</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -85,7 +85,7 @@ const Header = () => {
                 className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-300 font-medium relative group py-2 text-sm lg:text-base"
               >
                 {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 dark:bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-600 dark:bg-emerald-400 transition-all duration-300 group-hover:w-full"></span>
               </button>
             ))}
             
@@ -101,7 +101,7 @@ const Header = () => {
             {/* CV Download Button */}
             <button
               onClick={handleCVDownload}
-              className="flex items-center space-x-1.5 sm:space-x-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
+              className="flex items-center space-x-1.5 sm:space-x-2 bg-slate-800 dark:bg-emerald-600 text-white dark:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg hover:bg-slate-900 dark:hover:bg-emerald-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
             >
               <Download size={14} className="sm:w-4 sm:h-4" />
               <span>CV</span>
@@ -155,8 +155,8 @@ const Header = () => {
                   <button
                     onClick={handleCVDownload}
                     className={`w-full mt-2 flex items-center justify-center space-x-2 
-                      bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 
-                      px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 
+                      bg-slate-800 dark:bg-emerald-600 text-white dark:text-white 
+                      px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg hover:bg-slate-900 dark:hover:bg-emerald-700 
                       transition-all duration-200 opacity-0 animate-fadeIn text-sm sm:text-base`}
                     style={{ animationDelay: `${navItems.length * 50}ms` }}
                   >

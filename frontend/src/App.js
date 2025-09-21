@@ -29,6 +29,11 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
+    // Clear URL hash and reset scroll position
+    if (window.location.hash) {
+      window.history.replaceState(null, document.title, window.location.pathname);
+      window.scrollTo(0, 0);
+    }
     helloWorldApi();
   }, []);
 

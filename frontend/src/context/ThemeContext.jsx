@@ -11,7 +11,7 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     // Check if user has a saved theme preference
@@ -19,8 +19,8 @@ export const ThemeProvider = ({ children }) => {
     if (savedTheme) {
       setIsDark(savedTheme === 'dark');
     } else {
-      // Check system preference
-      setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+      // Default to dark mode
+      setIsDark(true);
     }
   }, []);
 

@@ -32,7 +32,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 dark:bg-gray-950 text-white transition-colors duration-300">
+    <footer className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Footer Content */}
@@ -42,17 +42,17 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="p-1.5 sm:p-2 bg-purple-600/20 rounded-lg">
-                  <Sparkles size={20} className="sm:w-6 sm:h-6 text-purple-400" />
+                <div className="p-1.5 sm:p-2 bg-emerald-100 dark:bg-emerald-500/20 rounded-lg border border-emerald-200 dark:border-emerald-500/30">
+                  <Sparkles size={20} className="sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-semibold">Bilal Rukundi</h3>
-                  <p className="text-gray-400 text-base sm:text-lg">Machine Learning Developer</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">Machine Learning Developer</p>
                 </div>
               </div>
             </div>
             
-            <p className="text-gray-300 leading-relaxed max-w-md text-base sm:text-lg">
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed max-w-md text-base sm:text-lg">
               Passionate about building intelligent solutions that solve real-world problems. 
               Always learning, always coding, always improving.
             </p>
@@ -67,10 +67,10 @@ const Footer = () => {
                 <button
                   key={label}
                   onClick={action}
-                  className="p-3 sm:p-4 bg-gray-800 dark:bg-gray-900 rounded-xl hover:bg-gray-700 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-110 hover:shadow-lg group border border-gray-700 dark:border-gray-800"
+                  className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-emerald-50 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 hover:shadow-lg group border border-gray-200 dark:border-gray-700"
                   aria-label={label}
                 >
-                  <Icon size={20} className="sm:w-6 sm:h-6 text-gray-400 group-hover:text-purple-400 transition-colors duration-300" />
+                  <Icon size={20} className="sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300" />
                 </button>
               ))}
             </div>
@@ -78,15 +78,15 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg sm:text-xl font-semibold mb-6 sm:mb-8 text-white">Quick Links</h4>
+            <h4 className="text-lg sm:text-xl font-semibold mb-6 sm:mb-8 text-gray-800 dark:text-white">Quick Links</h4>
             <nav className="space-y-3 sm:space-y-4">
               {navLinks.map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="block text-gray-300 hover:text-white transition-all duration-300 text-left text-base sm:text-lg hover:translate-x-2 group"
+                  className="block text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-300 text-left text-base sm:text-lg hover:translate-x-2 group"
                 >
-                  <span className="border-b border-transparent group-hover:border-purple-400 transition-colors duration-300">
+                  <span className="border-b border-transparent group-hover:border-emerald-400 transition-colors duration-300">
                     {link.label}
                   </span>
                 </button>
@@ -120,11 +120,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 dark:border-gray-900 py-8 sm:py-10">
+        <div className="border-t border-gray-200 dark:border-gray-800 py-8 sm:py-10">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-6 sm:space-y-0">
             
             {/* Copyright */}
-            <div className="flex items-center space-x-2 sm:space-x-3 text-gray-400">
+            <div className="flex items-center space-x-2 sm:space-x-3 text-gray-600 dark:text-gray-400">
               <span className="text-sm sm:text-base">© {currentYear} Bilal Rukundi. All rights reserved.</span>
               <Heart size={14} className="sm:w-4 sm:h-4 text-red-500 animate-pulse" />
             </div>
@@ -136,7 +136,7 @@ const Footer = () => {
                 {['React', 'Tailwind', 'FastAPI'].map((tech) => (
                   <span 
                     key={tech}
-                    className="px-2 sm:px-3 py-1 bg-gray-800 dark:bg-gray-900 text-gray-300 rounded-lg text-xs sm:text-sm border border-gray-700 dark:border-gray-800"
+                    className="px-2 sm:px-3 py-1 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-xs sm:text-sm border border-gray-200 dark:border-gray-700 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-gray-700 dark:hover:text-emerald-400 transition-all duration-300"
                   >
                     {tech}
                   </span>

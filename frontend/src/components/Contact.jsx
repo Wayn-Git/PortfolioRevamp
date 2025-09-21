@@ -100,7 +100,7 @@ const ContactForm = () => {
     <form 
       id="contact-form"
       onSubmit={handleSubmit} 
-      className={`bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 lg:p-10 space-y-6 sm:space-y-8 hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-2xl ${
+      className={`bg-gray-50 dark:bg-gray-800 rounded-3xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 sm:p-8 lg:p-10 space-y-6 sm:space-y-8 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-2xl ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
@@ -124,7 +124,7 @@ const ContactForm = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
             placeholder="Your full name"
           />
         </div>
@@ -140,7 +140,7 @@ const ContactForm = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
             placeholder="your.email@example.com"
           />
         </div>
@@ -157,7 +157,7 @@ const ContactForm = () => {
           required
           value={formData.subject}
           onChange={handleChange}
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
           placeholder="Project collaboration, job opportunity, etc."
         />
       </div>
@@ -173,7 +173,7 @@ const ContactForm = () => {
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent transition-all duration-300 resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
           placeholder="Tell me about your project or how we can work together..."
         />
       </div>
@@ -181,9 +181,9 @@ const ContactForm = () => {
       <button
         type="submit"
         disabled={isLoading}
-        className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-2 sm:space-x-3 hover:shadow-2xl hover:scale-105 group text-sm sm:text-base ${
-          isLoading ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
+className={`w-full bg-slate-800 hover:bg-slate-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-2 sm:space-x-3 hover:shadow-2xl hover:scale-105 group text-sm sm:text-base focus:ring-2 focus:ring-slate-500 ${
+  isLoading ? 'opacity-50 cursor-not-allowed' : ''
+}`}
       >
         {isLoading ? (
           <>
@@ -217,7 +217,7 @@ const Contact = () => {
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4">
           <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={16} className="sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 animate-pulse" />
+            <Sparkles size={16} className="sm:w-5 sm:h-5 text-black dark:text-white animate-pulse" />
             <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Let's Connect</span>
           </div>
           
@@ -236,7 +236,7 @@ const Contact = () => {
           <div className="space-y-6 sm:space-y-8 w-full max-w-lg mx-auto">
             
             {/* Contact Details */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
+            <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-200 dark:border-gray-600 shadow-md hover:shadow-xl transition-all duration-300 max-w-full sm:max-w-md mx-auto">
               <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Get in Touch</h3>
               
               <div className="space-y-6 sm:space-y-8">
@@ -247,14 +247,14 @@ const Contact = () => {
                 ].map(({ icon: Icon, label, value, action }) => (
                   <div key={label} className="flex items-center space-x-4 sm:space-x-6 group">
                     <div className="p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-600">
-                      <Icon size={24} className="sm:w-7 sm:h-7 text-purple-600 dark:text-purple-400" />
+                      <Icon size={24} className="sm:w-7 sm:h-7 text-black dark:text-white" />
                     </div>
                     <div>
                       <p className="font-medium text-gray-900 dark:text-gray-100 text-base sm:text-lg">{label}</p>
                       {action ? (
                         <button 
                           onClick={action}
-                          className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 text-sm sm:text-base"
+                          className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300 text-sm sm:text-base"
                         >
                           {value}
                         </button>
@@ -278,10 +278,10 @@ const Contact = () => {
                   <button
                     key={label}
                     onClick={action}
-                    className="flex items-center space-x-3 sm:space-x-4 bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-lg hover:scale-105 group"
+                    className="flex items-center space-x-3 sm:space-x-4 bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600 hover:border-emerald-300 dark:hover:border-emerald-500 hover:shadow-lg hover:scale-105 group"
                   >
-                    <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300" />
-                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 text-sm sm:text-base">{label}</span>
+                    <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors duration-300" />
+                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-black dark:group-hover:text-white transition-colors duration-300 text-sm sm:text-base">{label}</span>
                   </button>
                 ))}
               </div>
@@ -293,24 +293,20 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16 sm:mt-20 lg:mt-24 px-4">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 text-gray-100 dark:text-gray-900 rounded-3xl p-6 sm:p-8 lg:p-16 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 max-w-3xl mx-auto">
-            <h3 className="text-3xl sm:text-4xl font-semibold mb-4 sm:mb-6 text-gray-100 dark:text-gray-900">
-              Ready to Start Your Next Project?
-            </h3>
-            <p className="text-gray-300 dark:text-gray-600 text-lg sm:text-xl mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
-              Whether you need a custom ML model, data analysis, or help with your AI strategy, 
-              I'm here to help turn your vision into reality.
-            </p>
-            <button
-              onClick={openEmail}
-              className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-6 sm:px-10 py-3 sm:py-5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg"
-            >
-              Start a Conversation
-            </button>
-          </div>
-        </div>
+<div className="text-center mt-16 sm:mt-20 lg:mt-24 px-4">
+  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
+    Ready to Start Your Next Project?
+  </h2>
+  <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
+    Whether you need a custom ML model, data analysis, or help with your AI strategy, I'm here to help turn your vision into reality.
+  </p>
+  <button
+    onClick={openEmail}
+    className="bg-slate-800 hover:bg-slate-900 text-white px-6 sm:px-10 py-3 sm:py-5 rounded-xl transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg focus:ring-2 focus:ring-slate-500"
+  >
+    Start a Conversation
+  </button>
+</div>
       </div>
     </section>
   );

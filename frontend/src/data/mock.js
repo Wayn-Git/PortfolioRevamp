@@ -12,37 +12,37 @@ export const personalInfo = {
 export const projects = [
   {
     id: 1,
-    title: "Cat Vs Dog Classifier",
-    description: "A deep learning model that classifies images of cats and dogs with ~95%+ accuracy using convolutional neural networks.",
-    longDescription: "Built a comprehensive image classification system using TensorFlow and Keras. The model employs transfer learning with MobileNetV2 as the base architecture, fine-tuned on a dataset of 10,000 images. <br><br> Implemented Early Stopping: Prevents overfitting with patience=5 <br> Learning Rate Reduction: Adaptive LR with factor=0.2, patience=3 <br> Data Augmentation: Improves generalization significantly <br> Batch Processing: Efficient training with batch_size=64",
-    techStack: ["Python", "TensorFlow", "Keras", "OpenCV", "Streamlit"],
+    title: "Voice Emotion Detector",
+    description: "A deep learning system that analyzes speech patterns to detect and classify emotions in real-time voice input.",
+    longDescription: "An innovative machine learning project focused on emotion recognition from speech signals. Currently in development, the system will: <br><br>• Process real-time audio input for emotion detection<br>• Extract key acoustic features from voice samples<br>• Classify multiple emotional states (happy, sad, angry, neutral, etc.)<br>• Provide confidence scores for detected emotions<br><br>Using the RAVDESS dataset for training and implementing state-of-the-art deep learning architectures for audio processing.",
+    techStack: ["Python", "TensorFlow", "Librosa", "NumPy", "Jupyter"],
     category: "Deep Learning",
-    status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/CatvsDog",
-    demoUrl: "https://catvsdogclass.streamlit.app/",
+    status: "In Progress",
+    githubUrl: "https://github.com/Wayn-Git/VoiceEmotionDetector",
+    demoUrl: null,
     results: {
-      accuracy: "95%+",
-      dataset_size: "10,000 images",
-      training_time: "~15-20 epochs"
+      emotions_detected: "7+",
+      dataset_size: "RAVDESS",
+      development_phase: "Research"
     },
-    image: "/ProjectImage/catDog.gif"
+    image: "/ProjectImage/voiceEmotion.png"
   },
   {
     id: 2,
-    title: "Heart Failure Prediction",
-    description: "A machine learning model that predicts heart failure risk using clinical data with 85% accuracy.",
-    longDescription: "Developed a comprehensive healthcare prediction system using ensemble methods including Random Forest, XGBoost, and Gradient Boosting. The model analyzes 13 clinical features to predict heart failure risk. Implemented extensive feature engineering, handled missing data, and created an interactive dashboard for medical professionals using Streamlit.",
-    techStack: ["Python", "Scikit-learn", "XGBoost", "Pandas", "Streamlit"],
-    category: "Healthcare ML",
+    title: "DataForge",
+    description: "An automated data cleaning pipeline that detects and fixes typos, normalizes labels, and handles missing values in CSV datasets.",
+    longDescription: "Built during a hackathon, DataForge is a web application that streamlines the data cleaning process through an intuitive UI. The system automatically: <br><br>• Detects and fixes typos in data entries<br>• Normalizes inconsistent labels across columns<br>• Handles missing values with configurable strategies<br>• Generates detailed cleaning reports<br><br>Features a Flask backend for robust data processing and a lightweight frontend for easy interaction.",
+    techStack: ["Python", "Flask", "Pandas", "HTML/CSS", "JavaScript"],
+    category: "Data Processing",
     status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/Heart-Failure-Prediction",
-    demoUrl: "https://demo.bilalrukundi.com/heart-failure",
+    githubUrl: "https://github.com/Wayn-Git/DataForge",
+    demoUrl: null,
     results: {
-      accuracy: "85%",
-      precision: "72%",
-      recall: "80%"
+      processing_speed: "~2 min/MB",
+      supported_format: "CSV",
+      team_size: "4 members"
     },
-    image: "/ProjectImage/heartFailure.jpg"
+    image: "/ProjectImage/dataforge.jpg"
   },
   {
     id: 3,
@@ -60,6 +60,57 @@ export const projects = [
       test_coverage: "85%"
     },
     image: "/ProjectImage/MLScratch.png"
+  },
+  {
+    id: 4,
+    title: "Fraud Detection System",
+    description: "A machine learning solution for detecting fraudulent financial transactions using advanced feature engineering and Random Forest classification.",
+    longDescription: "Developed a comprehensive fraud detection system that tackles the challenges of imbalanced financial data. Key features include: <br><br>• Advanced feature engineering with temporal and behavioral patterns<br>• Robust handling of extreme class imbalance (fraud <1%)<br>• Transaction type analysis and risk scoring<br>• Prevention of feature leakage in financial data<br><br>Implemented using Random Forest with SMOTE balancing, achieving high precision in fraud detection while maintaining reasonable recall.",
+    techStack: ["Python", "Scikit-learn", "Pandas", "Imbalanced-learn", "Seaborn"],
+    category: "Financial ML",
+    status: "Completed",
+    githubUrl: "https://github.com/Wayn-Git/FraudDetection",
+    demoUrl: null,
+    results: {
+      feature_count: "15+",
+      fraud_detection: "High Precision",
+      data_coverage: "30 days"
+    },
+    image: "/ProjectImage/fraudDetect.png"
+  },
+  {
+    id: 5,
+    title: "Cat Vs Dog Classifier",
+    description: "A deep learning model that classifies images of cats and dogs with ~95%+ accuracy using convolutional neural networks.",
+    longDescription: "Built a comprehensive image classification system using TensorFlow and Keras. The model employs transfer learning with MobileNetV2 as the base architecture, fine-tuned on a dataset of 10,000 images. <br><br> Implemented Early Stopping: Prevents overfitting with patience=5 <br> Learning Rate Reduction: Adaptive LR with factor=0.2, patience=3 <br> Data Augmentation: Improves generalization significantly <br> Batch Processing: Efficient training with batch_size=64",
+    techStack: ["Python", "TensorFlow", "Keras", "OpenCV", "Streamlit"],
+    category: "Deep Learning",
+    status: "Completed",
+    githubUrl: "https://github.com/Wayn-Git/CatvsDog",
+    demoUrl: "https://catvsdogclass.streamlit.app/",
+    results: {
+      accuracy: "95%+",
+      dataset_size: "10,000 images",
+      training_time: "~15-20 epochs"
+    },
+    image: "/ProjectImage/catDog.gif"
+  },
+  {
+    id: 6,
+    title: "Heart Failure Prediction",
+    description: "A machine learning model that predicts heart failure risk using clinical data with 85% accuracy.",
+    longDescription: "Developed a comprehensive healthcare prediction system using ensemble methods including Random Forest, XGBoost, and Gradient Boosting. The model analyzes 13 clinical features to predict heart failure risk. Implemented extensive feature engineering, handled missing data, and created an interactive dashboard for medical professionals using Streamlit.",
+    techStack: ["Python", "Scikit-learn", "XGBoost", "Pandas", "Streamlit"],
+    category: "Healthcare ML",
+    status: "Completed",
+    githubUrl: "https://github.com/Wayn-Git/Heart-Failure-Prediction",
+    demoUrl: "https://demo.bilalrukundi.com/heart-failure",
+    results: {
+      accuracy: "85%",
+      precision: "72%",
+      recall: "80%"
+    },
+    image: "/ProjectImage/heartFailure.jpg"
   }
 ];
 
@@ -96,6 +147,18 @@ export const skills = {
 export const experience = [
   {
     id: 1,
+    title: "AI Research Intern",
+    company: "DeepSurg",
+    period: "2025 - Present",
+    description: "Contributing to the development of AI-powered surgical assistance technology, focusing on real-time decision support systems for minimally invasive surgery.",
+    achievements: [
+      "Working on multimodal AI systems for surgical applications",
+      "Developing deep learning models for real-time surgical assistance",
+      "Contributing to state-of-the-art surgical copilot technology"
+    ]
+  },
+  {
+    id: 2,
     title: "AI & Machine Learning Student",
     company: "Self-Directed Learning",
     period: "2024 - 2027",
