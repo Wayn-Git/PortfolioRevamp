@@ -42,7 +42,7 @@ export const projects = [
       supported_format: "CSV",
       team_size: "4 members"
     },
-    image: "/ProjectImage/dataforge.jpg"
+    image: "/ProjectImage/dataForge.jpg"
   },
   {
     id: 3,
