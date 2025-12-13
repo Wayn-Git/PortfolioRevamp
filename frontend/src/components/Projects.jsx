@@ -1,187 +1,222 @@
-import React, { useState, useEffect } from 'react';
-import { Github, ExternalLink, TrendingUp, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Github, ExternalLink, TrendingUp, Code, ArrowRight, ChevronDown } from 'lucide-react';
 import { projects } from '../data/mock';
 
-const ProjectCard = ({ project, isExpanded, onToggle, delay = 0 }) => {
+/* --- Helper Components --- */
+
+const StatusBadge = ({ status }) => {
+  const isCompleted = status === 'Completed';
+  
+  return (
+    <div className={`
+      inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-medium tracking-wider uppercase border
+      ${isCompleted 
+        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' 
+        : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
+      }
+    `}>
+      <span className={`flex h-1.5 w-1.5 rounded-full mr-2 ${isCompleted ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`} />
+      {status}
+    </div>
+  );
+};
+
+const ProjectCard = ({ project, index, isExpanded, onToggle }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [animationType, setAnimationType] = useState('');
-  const [isClosing, setIsClosing] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const domRef = useRef();
 
+  // --- FIX 1: ONE-TIME ANIMATION TRIGGER ---
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const element = document.getElementById(`project-${project.id}`);
-    if (element) observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [project.id, delay]);
-
-  const handleToggle = () => {
-    const willExpand = !isExpanded;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(entry.target); // STOP watching once visible
+      }
+    }, { threshold: 0.1 });
     
-    if (willExpand) {
-      setAnimationType('expand');
-      setIsAnimating(true);
-      setIsClosing(false);
-      onToggle();
-      setTimeout(() => {
-        setIsAnimating(false);
-        setAnimationType('');
-      }, 800);
-    } else {
-      setAnimationType('collapse');
-      setIsAnimating(true);
-      setIsClosing(true);
-      
-      setTimeout(() => {
-        onToggle();
-        setIsAnimating(false);
-        setAnimationType('');
-        setIsClosing(false);
-      }, 500);
-    }
-  };
+    if (domRef.current) observer.observe(domRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-  const openLink = (url, event) => {
-    if (url) {
-      event.stopPropagation();
-      window.open(url, '_blank', 'noopener,noreferrer');
+  // --- FIX 2: SMOOTHER SCROLL FOCUS ---
+  useEffect(() => {
+    if (isExpanded && domRef.current) {
+      setTimeout(() => {
+        domRef.current.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center', // Centers the card instead of snapping to top
+          inline: 'nearest'
+        });
+      }, 400); // Wait for layout shift to finish
     }
+  }, [isExpanded]);
+
+  const handleOpenLink = (url, e) => {
+    e.stopPropagation();
+    if (url) window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
     <div
-      id={`project-${project.id}`}
-      className={`bg-gray-100 dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-600 ease-out cursor-pointer group hover:-translate-y-2 ${
-        isExpanded ? 'lg:col-span-2 scale-102 shadow-xl' : ''
-      } ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${isAnimating ? (animationType === 'expand' ? 'animate-zoom-in-expand' : 'animate-zoom-out-collapse') : ''}`}
-      onClick={handleToggle}
+      ref={domRef}
+      onClick={onToggle}
+      className={`
+        group relative flex flex-col overflow-hidden rounded-3xl cursor-pointer scroll-mt-32
+        bg-white dark:bg-[#0f0f0f]
+        border border-gray-200 dark:border-gray-800
+        will-change-transform
+        ${isExpanded 
+          ? 'lg:col-span-2 shadow-2xl ring-1 ring-emerald-500/20 z-20' 
+          : 'hover:shadow-xl hover:-translate-y-1 hover:border-emerald-500/30'
+        }
+        transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]
+        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
+      `}
+      style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
     >
-      {/* Project Image */}
-      <div className={`overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 relative transition-all duration-600 ease-out ${
-        isExpanded ? 'aspect-[21/9] rounded-t-2xl' : 'aspect-[16/10] rounded-t-3xl'
-      }`}>
-        <img
-          src={project.image}
+      {/* --- IMAGE HEADER --- */}
+      <div className={`relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800 transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${isExpanded ? 'h-64 sm:h-96' : 'h-56'}`}>
+        
+        {/* Skeleton Loader */}
+        <div className={`absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse transition-opacity duration-500 ${imageLoaded ? 'opacity-0' : 'opacity-100'}`} />
+        
+        <img 
+          src={project.image} 
           alt={project.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-800 ease-out"
+          loading="lazy"
+          onLoad={() => setImageLoaded(true)}
+          className={`
+            w-full h-full object-cover transition-transform duration-1000 ease-out will-change-transform
+            ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}
+            ${isExpanded ? 'scale-100' : 'group-hover:scale-105'} 
+          `}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/30 transition-colors duration-600 ease-out"></div>
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
+        
+        {/* Floating Category Badge */}
+        <div className="absolute top-4 left-4 z-10">
+          <span className="px-3 py-1 bg-white/10 backdrop-blur-md text-xs font-semibold text-white rounded-full border border-white/20 shadow-lg">
+            {project.category}
+          </span>
+        </div>
+
+        {/* Expand/Collapse Icon */}
+        <div className="absolute top-4 right-4 z-10">
+          <div className={`p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white transition-transform duration-500 ${isExpanded ? 'rotate-180 bg-white/20' : ''}`}>
+             <ChevronDown size={20} />
+          </div>
+        </div>
+
+        {/* Title Overlay */}
+        <div className={`absolute bottom-0 left-0 right-0 p-6 sm:p-8 transition-transform duration-700 ${isExpanded ? 'translate-y-0' : 'translate-y-2'}`}>
+           <h3 className="text-2xl sm:text-4xl font-bold text-white mb-2 tracking-tight drop-shadow-lg">
+             {project.title}
+           </h3>
+           {!isExpanded && (
+             <p className="text-emerald-400 text-sm font-medium tracking-wide uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center gap-2">
+               View Dossier <ArrowRight size={14} />
+             </p>
+           )}
+        </div>
       </div>
 
-      {/* Project Content */}
-      <div className="p-4 sm:p-6">
-        {/* Header */}
-        <div className="mb-3 sm:mb-4">
-          {/* Title and Action Buttons - Stack on mobile, side by side on desktop */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-3">
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 order-1 sm:order-1">
-              {project.title}
-            </h3>
+      {/* --- CONTENT BODY --- */}
+      <div className="flex-1 bg-white dark:bg-[#0f0f0f] relative">
+        
+        {/* Progress Bar Animation */}
+        <div className="h-[2px] w-full bg-gray-100 dark:bg-gray-800">
+          <div className={`h-full bg-emerald-500 transition-all duration-1000 ease-out ${isExpanded ? 'w-full opacity-100' : 'w-0 opacity-0'}`} />
+        </div>
+
+        <div className="p-6 sm:p-8">
+          {/* Header Row */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <StatusBadge status={project.status} />
             
-                         {/* Action Buttons */}
-             <div className="flex items-center justify-center sm:justify-end space-x-2 order-2 sm:order-2 flex-shrink-0 w-full sm:w-auto">
-               {project.githubUrl && (
-                 <button
-                   onClick={(e) => openLink(project.githubUrl, e)}
-                   className="flex items-center justify-center p-2.5 sm:p-3 bg-white dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-110 group min-w-[44px] min-h-[44px] border border-gray-200 dark:border-gray-600"
-                   aria-label="View on GitHub"
-                 >
-                   <Github size={18} className="sm:w-4 sm:h-4 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
-                 </button>
-               )}
+            <div className="flex gap-2">
+              {project.githubUrl && (
+                <button
+                  onClick={(e) => handleOpenLink(project.githubUrl, e)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 text-xs font-bold uppercase tracking-wide"
+                >
+                  <Github size={16} /> Code
+                </button>
+              )}
                {project.demoUrl && (
-                 <button
-                   onClick={(e) => openLink(project.demoUrl, e)}
-                   className="flex items-center justify-center p-2.5 sm:p-3 bg-white dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-110 group min-w-[44px] min-h-[44px] border border-gray-200 dark:border-gray-600"
-                   aria-label="View Demo"
-                 >
-                   <ExternalLink size={18} className="sm:w-4 sm:h-4 text-gray-700 dark:text-gray-300 group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
-                 </button>
-               )}
+                <button
+                  onClick={(e) => handleOpenLink(project.demoUrl, e)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all duration-300 text-xs font-bold uppercase tracking-wide"
+                >
+                  <ExternalLink size={16} /> Live Demo
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Description - Optimized Transition */}
+          <div className={`text-gray-600 dark:text-gray-400 leading-relaxed mb-8 transition-all duration-500 ${isExpanded ? 'line-clamp-none' : 'line-clamp-3'}`}>
+             {isExpanded ? (
+               <div dangerouslySetInnerHTML={{ __html: project.longDescription }} className="prose dark:prose-invert max-w-none animate-fade-in-up" />
+             ) : (
+               project.description
+             )}
+          </div>
+
+          {/* EXPANDED CONTENT - Optimized height transition */}
+          <div 
+            className={`
+              grid gap-6 overflow-hidden transition-[max-height,opacity,margin] duration-700 ease-in-out
+              ${isExpanded ? 'max-h-[1000px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}
+            `}
+          >
+            
+            {/* 1. Results Grid */}
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/50">
+               <div className="flex items-center gap-2 mb-4 text-sm font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                  <TrendingUp size={16} /> Key Metrics
+               </div>
+               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                 {Object.entries(project.results).map(([key, value], i) => (
+                   <div key={i} className="bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                     <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{value}</div>
+                     <div className="text-xs text-gray-500 uppercase">{key.replace('_', ' ')}</div>
+                   </div>
+                 ))}
+               </div>
+            </div>
+
+            {/* 2. Tech Stack */}
+            <div>
+              <div className="flex items-center gap-2 mb-4 text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
+                <Code size={16} /> Technologies
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.techStack.map((tech, i) => (
+                  <span 
+                    key={i}
+                    className="px-3 py-1.5 text-xs font-mono font-medium rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+          </div>
+
+          {/* Collapsed Tech Stack Preview - Cross-fades nicely */}
+          <div className={`mt-auto pt-6 border-t border-gray-100 dark:border-gray-800 transition-all duration-300 ${isExpanded ? 'opacity-0 h-0 hidden' : 'opacity-100 h-auto block'}`}>
+             <div className="flex flex-wrap gap-2">
+               {project.techStack.slice(0, 3).map((tech, i) => (
+                 <span key={i} className="text-xs text-gray-500 font-mono">{tech}</span>
+               ))}
+               <span className="text-xs text-emerald-500 font-medium">+ {project.techStack.length - 3} more</span>
              </div>
           </div>
-          
-          {/* Status and Category Tags */}
-          <div className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3">
-            <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-sm font-medium rounded-full ${
-              project.status === 'Completed' 
-                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
-                : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800'
-            }`}>
-              {project.status}
-            </span>
-            <span className="px-2.5 sm:px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs sm:text-sm font-medium rounded-full border border-gray-200 dark:border-gray-600">
-              {project.category}
-            </span>
-          </div>
-        </div>
 
-        {/* Description */}
-        <div className={`text-gray-600 dark:text-gray-400 leading-relaxed mb-3 sm:mb-4 text-sm sm:text-base transition-all duration-600 ease-out ${
-          (isExpanded || isClosing) ? 'scale-100 opacity-100' : 'scale-95 opacity-90'
-        }`}>
-          {(isExpanded || isClosing) ? (
-            <div
-              className="animate-fade-in-up"
-              dangerouslySetInnerHTML={{ __html: project.longDescription }}
-            />
-          ) : (
-            <p className="line-clamp-3">{project.description}</p>
-          )}
-        </div>
-
-        {/* Tech Stack */}
-        <div className={`flex flex-wrap gap-2 mb-3 sm:mb-4 transition-all duration-600 ease-out ${
-          (isExpanded || isClosing) ? 'scale-100 opacity-100' : 'scale-95 opacity-90'
-        }`}>
-          {project.techStack.map((tech, index) => (
-            <span
-              key={index}
-              className="px-2 sm:px-3 py-1 sm:py-1.5 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium border border-gray-100 dark:border-gray-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-700 transition-all duration-300 text-xs sm:text-sm"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        {/* Results - Show when expanded */}
-        {(isExpanded || isClosing) && (
-          <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-2xl border border-gray-100 dark:border-gray-600 animate-fade-in-up transition-all duration-600 ease-out">
-            <div className="flex items-center space-x-2 mb-3">
-              <TrendingUp size={16} className="text-green-600 dark:text-green-400" />
-              <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">Key Results</h4>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {Object.entries(project.results).map(([key, value]) => (
-                <div key={key} className="text-center p-2 sm:p-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-600">
-                  <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
-                    {value}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 capitalize">
-                    {key.replace(/_/g, ' ')}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Expand/Collapse Indicator */}
-        <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
-          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
-            {(isExpanded || isClosing) ? 'Click to collapse' : 'Click to read more'}
-          </span>
         </div>
       </div>
     </div>
@@ -189,64 +224,74 @@ const ProjectCard = ({ project, isExpanded, onToggle, delay = 0 }) => {
 };
 
 const Projects = () => {
-  const [expandedProject, setExpandedProject] = useState(null);
+  const [mounted, setMounted] = useState(false);
+  const [expandedId, setExpandedId] = useState(null);
 
-  const toggleProject = (projectId) => {
-    setExpandedProject(expandedProject === projectId ? null : projectId);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleToggle = (id) => {
+    setExpandedId(prevId => (prevId === id ? null : id));
   };
 
   return (
-    <section id="projects" className="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="relative py-24 sm:py-32 overflow-hidden bg-white dark:bg-[#0a0a0a]">
+      
+      {/* --- BLENDING & ATMOSPHERE --- */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-white via-white/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/50 dark:to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800 [mask-image:linear-gradient(to_bottom,transparent,white_20%,white_80%,transparent)] pointer-events-none opacity-40" />
+      
+      {/* Ambient Orbs - Slowed down float for less distraction */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vh] bg-emerald-500/5 dark:bg-emerald-500/5 blur-[120px] rounded-full animate-float-slow" />
+        <div className="absolute bottom-[10%] left-[-10%] w-[40vw] h-[40vh] bg-blue-500/5 dark:bg-blue-500/5 blur-[100px] rounded-full animate-float-medium" />
+      </div>
+
+      {/* Connecting Scroll Line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gray-200 dark:bg-gray-800 overflow-hidden z-20">
+         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-emerald-500/50 to-transparent animate-scroll-drop" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 z-30">
         
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="inline-flex items-center space-x-2 bg-white dark:bg-gray-800 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-700 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={16} className="text-emerald-600 dark:text-emerald-400 animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Featured Work</span>
+        {/* Header */}
+        <div className="text-center mb-24">
+          <div className={`inline-flex items-center gap-2 mb-6 transition-all duration-1000 ease-premium ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+             <div className="h-[1px] w-12 bg-emerald-500/50" />
+             <span className="text-sm font-mono font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">System Logs / Projects</span>
+             <div className="h-[1px] w-12 bg-emerald-500/50" />
           </div>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 animate-fade-in-up">
-            My Projects
+          <h2 className={`text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight ${mounted ? 'reveal-text' : 'reveal-text-hidden'}`}>
+            Architecting <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400">Intelligence.</span>
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed px-4">
-            A collection of machine learning projects showcasing my expertise in building intelligent solutions 
-            that solve real-world problems.
-          </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+        {/* Masonry-style Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              isExpanded={expandedProject === project.id}
-              onToggle={() => toggleProject(project.id)}
-              delay={index * 200}
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              index={index} 
+              isExpanded={expandedId === project.id}
+              onToggle={() => handleToggle(project.id)}
             />
           ))}
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16 sm:mt-20 lg:mt-24">
-          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 lg:p-12 max-w-4xl mx-auto hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-              Have a Project in Mind?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-              I'm always interested in new challenges and opportunities to apply machine learning 
-              to solve complex problems. Let's discuss how we can work together.
-            </p>
-            <a
-              href="#contact"
-              className="inline-flex items-center space-x-3 bg-emerald-600 dark:bg-emerald-500 text-white dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-all duration-300 hover:scale-105 hover:shadow-xl font-medium text-base sm:text-lg"
-            >
-              <span>Let's Talk</span>
-              <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-          </div>
+        {/* Footer CTA */}
+        <div className="mt-32 text-center">
+          <button 
+            onClick={() => window.open('https://github.com/Wayn-Git', '_blank')}
+            className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-300 bg-black dark:bg-white dark:text-black rounded-full hover:scale-105 shadow-lg hover:shadow-emerald-500/20"
+          >
+            <span className="mr-2">Explore GitHub</span>
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
+
       </div>
     </section>
   );

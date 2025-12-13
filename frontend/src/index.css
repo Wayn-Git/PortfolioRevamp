@@ -440,3 +440,87 @@ html, body {
   }
 }
 
+
+/* ... [Keep your existing reset/base styles] ... */
+
+@layer utilities {
+
+  /* PREMIUM EASING: The "Heavy" Feel */
+  .transition-premium {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); /* Custom ease-out */
+    transition-duration: 800ms; /* Slower = More Luxurious */
+  }
+
+  /* Mobile Menu Animation Classes */
+  .mobile-menu-enter {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  
+  .mobile-menu-enter-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 400ms ease-out, transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-item-enter {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  /* Staggered delays for menu items */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+
+  /* Premium Grid Background */
+  .bg-grid-slate-200 {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='%23e2e8f0'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+  
+  .dark .bg-grid-slate-800 {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='%231e293b'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+
+  /* Text Reveal Animation (Clip Path) */
+  .reveal-text {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-text-hidden {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  
+  /* Shimmer Effect for Buttons */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%
+    );
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+}

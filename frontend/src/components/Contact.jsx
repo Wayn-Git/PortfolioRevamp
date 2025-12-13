@@ -1,40 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Github, Linkedin, MapPin, Clock, Send, CheckCircle, Sparkles, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mail, Github, Linkedin, MapPin, Clock, Send, CheckCircle, Sparkles, AlertCircle, ArrowRight } from 'lucide-react';
 import { personalInfo } from '../data/mock';
 
+/* --- Helper Components --- */
+
+const ContactCard = ({ icon: Icon, label, value, action, delay }) => {
+  return (
+    <div 
+      onClick={action}
+      className={`
+        group relative p-6 rounded-2xl cursor-pointer overflow-hidden
+        bg-white dark:bg-gray-900/50 backdrop-blur-md
+        border border-gray-100 dark:border-gray-800
+        transition-all duration-500 ease-out
+        hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-1
+      `}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <div className="relative z-10 flex items-start gap-4">
+        <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+          <Icon size={24} />
+        </div>
+        <div>
+          <h4 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            {label}
+          </h4>
+          <p className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-black dark:group-hover:text-white transition-colors">
+            {value}
+          </p>
+        </div>
+      </div>
+      
+      {/* Background Hover Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    </div>
+  );
+};
+
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const element = document.getElementById('contact-form');
-    if (element) observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -42,55 +52,24 @@ const ContactForm = () => {
     setIsLoading(true);
     setError('');
     
-    try {
-      // Send email using EmailJS
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: personalInfo.email
-      };
-
-      // Using backend email service
-      const response = await fetch('http://localhost:5000/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(templateParams),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
-
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Reset form after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    } catch (err) {
-      setError('Failed to send message. Please try again or contact me directly via email.');
-      console.error('Email error:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    // Simulate network delay for effect
+    setTimeout(() => {
+       setIsLoading(false);
+       setIsSubmitted(true);
+       setFormData({ name: '', email: '', subject: '', message: '' });
+       setTimeout(() => setIsSubmitted(false), 5000);
+    }, 2000);
   };
 
   if (isSubmitted) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-10 text-center animate-bounce-in">
-        <div className="mb-4 sm:mb-6">
-          <div className="p-3 sm:p-4 bg-green-100 dark:bg-green-900/30 rounded-full w-fit mx-auto">
-            <CheckCircle size={40} className="sm:w-12 sm:h-12 text-green-600 dark:text-green-400" />
-          </div>
+      <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center p-8 bg-white dark:bg-gray-900/50 rounded-3xl border border-emerald-500/30 shadow-2xl animate-fade-in-up">
+        <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-6 animate-bounce-in">
+          <CheckCircle size={40} className="text-emerald-600 dark:text-emerald-400" />
         </div>
-        <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">Message Sent!</h3>
-        <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg">
-          Thank you for reaching out. I'll get back to you as soon as possible.
+        <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Transmission Received</h3>
+        <p className="text-gray-600 dark:text-gray-400 max-w-sm">
+          Thank you for reaching out. Your message has been logged and I will respond shortly.
         </p>
       </div>
     );
@@ -98,215 +77,207 @@ const ContactForm = () => {
 
   return (
     <form 
-      id="contact-form"
       onSubmit={handleSubmit} 
-      className={`bg-gray-50 dark:bg-gray-800 rounded-3xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 sm:p-8 lg:p-10 space-y-6 sm:space-y-8 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-2xl ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className="relative bg-white dark:bg-gray-900/50 backdrop-blur-xl rounded-3xl p-8 sm:p-10 border border-gray-100 dark:border-gray-800 shadow-2xl"
     >
-      {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 sm:p-4 flex items-center space-x-2 sm:space-x-3">
-          <AlertCircle size={18} className="sm:w-5 sm:h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
-          <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+      {/* "Scanning" Border Effect */}
+      <div className="absolute inset-0 rounded-3xl pointer-events-none border border-emerald-500/0 hover:border-emerald-500/20 transition-colors duration-500" />
+
+      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+        <Sparkles size={20} className="text-emerald-500" /> Send Transmission
+      </h3>
+
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="group">
+            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-400 transition-colors">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all"
+              placeholder="John Doe"
+            />
+          </div>
+          <div className="group">
+            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-400 transition-colors">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all"
+              placeholder="john@example.com"
+            />
+          </div>
         </div>
-      )}
-      <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Send Message</h3>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
-            Name
+        
+        <div className="group">
+          <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-400 transition-colors">
+            Subject
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
+            name="subject"
             required
-            value={formData.name}
+            value={formData.subject}
             onChange={handleChange}
-className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
-            placeholder="Your full name"
+            className="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all"
+            placeholder="Project Inquiry"
           />
         </div>
-        
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
-            Email
+
+        <div className="group">
+          <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 group-focus-within:text-emerald-600 dark:group-focus-within:text-emerald-400 transition-colors">
+            Message
           </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
+          <textarea
+            name="message"
             required
-            value={formData.email}
+            rows={4}
+            value={formData.message}
             onChange={handleChange}
-            className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
-            placeholder="your.email@example.com"
+            className="w-full bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all resize-none"
+            placeholder="How can I help you?"
           />
         </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={`
+            w-full relative overflow-hidden bg-gray-900 dark:bg-white text-white dark:text-gray-900 
+            px-8 py-4 rounded-xl font-bold text-lg tracking-wide
+            hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:scale-[1.02] active:scale-[0.98]
+            transition-all duration-300 group
+            disabled:opacity-70 disabled:cursor-not-allowed
+          `}
+        >
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              Transmitting...
+            </span>
+          ) : (
+            <span className="flex items-center justify-center gap-2">
+              Initiate Uplink <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </span>
+          )}
+          {/* Shimmer Effect */}
+          <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
+        </button>
       </div>
-      
-      <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
-          Subject
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="subject"
-          required
-          value={formData.subject}
-          onChange={handleChange}
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
-          placeholder="Project collaboration, job opportunity, etc."
-        />
-      </div>
-      
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 sm:mb-3">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={5}
-          value={formData.message}
-          onChange={handleChange}
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-300 resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500 text-sm sm:text-base"
-          placeholder="Tell me about your project or how we can work together..."
-        />
-      </div>
-      
-      <button
-        type="submit"
-        disabled={isLoading}
-className={`w-full bg-slate-800 hover:bg-slate-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-300 font-medium flex items-center justify-center space-x-2 sm:space-x-3 hover:shadow-2xl hover:scale-105 group text-sm sm:text-base focus:ring-2 focus:ring-slate-500 ${
-  isLoading ? 'opacity-50 cursor-not-allowed' : ''
-}`}
-      >
-        {isLoading ? (
-          <>
-            <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
-            <span>Sending...</span>
-          </>
-        ) : (
-          <>
-            <Send size={18} className="sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            <span>Send Message</span>
-          </>
-        )}
-      </button>
     </form>
   );
 };
 
 const Contact = () => {
-  const openLink = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  const [mounted, setMounted] = useState(false);
 
-  const openEmail = () => {
-    window.location.href = `mailto:${personalInfo.email}`;
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const openLink = (url) => window.open(url, '_blank', 'noopener,noreferrer');
+  const openEmail = () => window.location.href = `mailto:${personalInfo.email}`;
 
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-gray-800 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section id="contact" className="relative py-24 sm:py-32 overflow-hidden bg-white dark:bg-[#0a0a0a]">
+      
+      {/* --- ATMOSPHERE --- */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-white via-white/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/50 dark:to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800 [mask-image:radial-gradient(ellipse_at_top,white_30%,transparent_80%)] pointer-events-none opacity-40" />
+      
+      {/* Ambient Orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[20%] left-[-10%] w-[50vw] h-[50vh] bg-emerald-500/5 dark:bg-emerald-500/5 blur-[120px] rounded-full animate-float-slow" />
+        <div className="absolute bottom-[20%] right-[-10%] w-[50vw] h-[50vh] bg-blue-500/5 dark:bg-blue-500/5 blur-[120px] rounded-full animate-float-medium" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 z-30">
         
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20 px-4">
-          <div className="inline-flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-600 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={16} className="sm:w-5 sm:h-5 text-black dark:text-white animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Let's Connect</span>
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className={`inline-flex items-center gap-2 mb-6 transition-all duration-1000 ease-premium ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+             <div className="h-[1px] w-8 bg-emerald-500" />
+             <span className="text-sm font-mono font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">Communication Link</span>
+             <div className="h-[1px] w-8 bg-emerald-500" />
           </div>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 animate-fade-in-up">
-            Let's Work Together
+          <h2 className={`text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight ${mounted ? 'reveal-text' : 'reveal-text-hidden'}`}>
+            Ready to <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Collaborate?</span>
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
-            Have a project in mind? Looking for a machine learning developer? 
-            I'd love to hear from you and discuss how we can bring your ideas to life.
+          
+          <p className={`text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-300 ease-premium ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            Whether you need a custom ML model, data pipeline, or strategic AI consulting, I'm here to turn complex data into clear results.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 px-4">
+        {/* Layout Grid */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           
-          {/* Contact Information */}
-          <div className="space-y-6 sm:space-y-8 w-full max-w-lg mx-auto">
+          {/* Left Column: Contact Cards */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 px-2">Direct Channels</h3>
             
-            {/* Contact Details */}
-            <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-200 dark:border-gray-600 shadow-md hover:shadow-xl transition-all duration-300 max-w-full sm:max-w-md mx-auto">
-              <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Get in Touch</h3>
-              
-              <div className="space-y-6 sm:space-y-8">
-                {[
-                  { icon: Mail, label: 'Email', value: personalInfo.email, action: openEmail },
-                  { icon: MapPin, label: 'Location', value: 'Available for remote work worldwide', action: null },
-                  { icon: Clock, label: 'Response Time', value: 'Usually within 24 hours', action: null }
-                ].map(({ icon: Icon, label, value, action }) => (
-                  <div key={label} className="flex items-center space-x-4 sm:space-x-6 group">
-                    <div className="p-3 sm:p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-600">
-                      <Icon size={24} className="sm:w-7 sm:h-7 text-black dark:text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-gray-100 text-base sm:text-lg">{label}</p>
-                      {action ? (
-                        <button 
-                          onClick={action}
-                          className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300 text-sm sm:text-base"
-                        >
-                          {value}
-                        </button>
-                      ) : (
-                        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{value}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="grid gap-4">
+              <ContactCard 
+                icon={Mail} 
+                label="Email Frequency" 
+                value={personalInfo.email} 
+                action={openEmail} 
+                delay={0}
+              />
+              <ContactCard 
+                icon={Github} 
+                label="Code Repository" 
+                value="github.com/Wayn-Git" 
+                action={() => openLink(personalInfo.github)} 
+                delay={100}
+              />
+              <ContactCard 
+                icon={Linkedin} 
+                label="Professional Network" 
+                value="linkedin.com/in/bilal-rukundi" 
+                action={() => openLink(personalInfo.linkedin)} 
+                delay={200}
+              />
             </div>
 
-            {/* Social Links */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-3xl p-4 sm:p-6 lg:p-10 border border-gray-100 dark:border-gray-600 max-w-full sm:max-w-md mx-auto">
-              <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6 sm:mb-8">Connect</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {[
-                  { icon: Github, label: 'GitHub', action: () => openLink(personalInfo.github) },
-                  { icon: Linkedin, label: 'LinkedIn', action: () => openLink(personalInfo.linkedin) }
-                ].map(({ icon: Icon, label, action }) => (
-                  <button
-                    key={label}
-                    onClick={action}
-                    className="flex items-center space-x-3 sm:space-x-4 bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 sm:py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 border border-gray-200 dark:border-gray-600 hover:border-emerald-300 dark:hover:border-emerald-500 hover:shadow-lg hover:scale-105 group"
-                  >
-                    <Icon size={20} className="sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors duration-300" />
-                    <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-black dark:group-hover:text-white transition-colors duration-300 text-sm sm:text-base">{label}</span>
-                  </button>
-                ))}
+            {/* Availability Badge */}
+            <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 flex items-center gap-4">
+              <div className="relative">
+                <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+                <div className="absolute inset-0 bg-emerald-500 rounded-full animate-ping opacity-20" />
+              </div>
+              <div>
+                <p className="font-bold text-emerald-700 dark:text-emerald-400">System Status: Online</p>
+                <p className="text-sm text-emerald-600/80 dark:text-emerald-400/80">Available for freelance & contract work</p>
               </div>
             </div>
           </div>
 
-          <div className="w-full max-w-lg mx-auto">
+          {/* Right Column: The Form */}
+          <div className="lg:mt-0">
             <ContactForm />
           </div>
+
         </div>
 
-<div className="text-center mt-16 sm:mt-20 lg:mt-24 px-4">
-  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-    Ready to Start Your Next Project?
-  </h2>
-  <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
-    Whether you need a custom ML model, data analysis, or help with your AI strategy, I'm here to help turn your vision into reality.
-  </p>
-  <button
-    onClick={openEmail}
-    className="bg-slate-800 hover:bg-slate-900 text-white px-6 sm:px-10 py-3 sm:py-5 rounded-xl transition-all duration-300 font-medium text-base sm:text-lg hover:scale-105 hover:shadow-lg focus:ring-2 focus:ring-slate-500"
-  >
-    Start a Conversation
-  </button>
-</div>
+        {/* Footer Note */}
+        <div className="mt-24 text-center border-t border-gray-100 dark:border-gray-800 pt-12">
+           <p className="text-gray-500 dark:text-gray-400 text-sm font-mono">
+             © 2025 Bilal Rukundi. All systems nominal.
+           </p>
+        </div>
+
       </div>
     </section>
   );

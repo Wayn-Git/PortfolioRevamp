@@ -1,68 +1,103 @@
-import React, { useEffect, useState } from 'react';
-import { Code, Database, Brain, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Code, Database, Brain, Sparkles, Cpu, Terminal, Globe, Zap, GitBranch } from 'lucide-react';
 import { skills } from '../data/mock';
 
-const SkillPill = ({ skill, delay = 0 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+/* --- Helper Components --- */
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
+const TechBadge = ({ skill, index }) => {
   return (
     <div 
-      className={`inline-flex items-center space-x-2 bg-white/80 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 hover:shadow-md hover:scale-105 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className="
+        group relative flex items-center gap-2 px-3 py-2 
+        bg-white dark:bg-gray-900/50 
+        border border-gray-200 dark:border-gray-700 
+        rounded-lg cursor-default
+        transition-all duration-300 ease-out
+        hover:border-emerald-500/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:-translate-y-1 hover:bg-gray-50 dark:hover:bg-gray-800
+      "
+      style={{ transitionDelay: `${index * 50}ms` }}
     >
-      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></span>
-      <span className="font-medium text-gray-900 dark:text-gray-100 text-sm sm:text-base">{skill.name}</span>
+      {/* "Level" Indicator Dot */}
+      <div className={`
+        w-1.5 h-1.5 rounded-full 
+        ${skill.level >= 90 ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' : 
+          skill.level >= 80 ? 'bg-blue-500' : 'bg-gray-400'}
+        group-hover:scale-125 transition-transform duration-300
+      `} />
+      
+      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+        {skill.name}
+      </span>
+      
+      {/* Hover Scan Effect */}
+      <div className="absolute inset-0 rounded-lg overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]" />
+      </div>
     </div>
   );
 };
 
-const SkillCategory = ({ title, skillList, icon: Icon, delay = 0 }) => {
+const SkillGroup = ({ title, skillList, icon: Icon, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.1 });
 
-    const element = document.getElementById(`skill-category-${title.toLowerCase()}`);
-    if (element) observer.observe(element);
-
+    if (domRef.current) observer.observe(domRef.current);
     return () => observer.disconnect();
-  }, [title]);
+  }, []);
+
+  // Calculate average proficiency for the "System Load" bar
+  const avgLevel = skillList.reduce((acc, curr) => acc + curr.level, 0) / skillList.length;
 
   return (
     <div 
-      id={`skill-category-${title.toLowerCase()}`}
-      className={`bg-gray-100 dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-6 sm:p-8 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
-      style={{ animationDelay: `${delay}ms` }}
+      ref={domRef}
+      className={`
+        relative flex flex-col p-6 sm:p-8 rounded-3xl overflow-hidden
+        bg-white/40 dark:bg-gray-900/40 backdrop-blur-md
+        border border-gray-100 dark:border-gray-800
+        transition-all duration-1000 ease-premium will-change-transform
+        hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-2xl hover:shadow-emerald-500/5
+        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
+      `}
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="flex items-center space-x-2 sm:space-x-3 mb-6 sm:mb-8">
-        <div className="p-2 sm:p-3 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-xl group-hover:scale-110 transition-transform duration-300">
-          <Icon size={24} className="sm:w-7 sm:h-7 text-gray-700 dark:text-gray-300" />
+      {/* Decorative Background Grid inside card */}
+      <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800 [mask-image:linear-gradient(to_bottom,white,transparent)] opacity-[0.05] pointer-events-none" />
+
+      <div className="relative z-10 mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700">
+            <Icon size={20} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
         </div>
-        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+        
+        {/* "System Load" Indicator */}
+        <div className="flex items-center gap-2">
+           <span className="text-xs font-mono text-gray-400">PWR</span>
+           <div className="w-16 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+             <div 
+               className="h-full bg-emerald-500 transition-all duration-1500 ease-out" 
+               style={{ width: isVisible ? `${avgLevel}%` : '0%' }}
+             />
+           </div>
+        </div>
       </div>
       
-      <div className="flex flex-wrap gap-2 sm:gap-3">
+      <div className="relative z-10 flex flex-wrap gap-2">
         {skillList.map((skill, index) => (
-          <SkillPill 
+          <TechBadge 
             key={index} 
             skill={skill} 
-            delay={isVisible ? index * 100 : 0}
+            index={index}
           />
         ))}
       </div>
@@ -71,89 +106,121 @@ const SkillCategory = ({ title, skillList, icon: Icon, delay = 0 }) => {
 };
 
 const Skills = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section id="skills" className="py-16 sm:py-20 lg:py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="relative py-24 sm:py-32 overflow-hidden bg-white dark:bg-[#0a0a0a]">
+      
+      {/* --- BLENDING ATMOSPHERE --- */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-white via-white/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/50 dark:to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800 [mask-image:radial-gradient(ellipse_at_top,white_30%,transparent_80%)] pointer-events-none opacity-40" />
+      
+      {/* Ambient Orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[40%] left-[-20%] w-[50vw] h-[50vh] bg-emerald-500/5 dark:bg-emerald-500/5 blur-[120px] rounded-full animate-float-slow" />
+        <div className="absolute bottom-[20%] right-[-20%] w-[50vw] h-[50vh] bg-purple-500/5 dark:bg-purple-500/5 blur-[120px] rounded-full animate-float-medium" />
+      </div>
+
+      {/* Connecting Scroll Line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gray-200 dark:bg-gray-800 overflow-hidden z-20">
+         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-emerald-500/50 to-transparent animate-scroll-drop" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 z-30">
         
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div className="inline-flex items-center space-x-2 bg-white dark:bg-gray-800 px-4 sm:px-6 py-2 rounded-full border border-gray-200 dark:border-gray-700 mb-4 sm:mb-6 hover:shadow-md transition-all duration-300">
-            <Sparkles size={16} className="sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-400 font-medium text-sm sm:text-base">Skills & Technologies</span>
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className={`inline-flex items-center gap-2 mb-6 transition-all duration-1000 ease-premium ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+             <div className="h-[1px] w-8 bg-emerald-500" />
+             <span className="text-sm font-mono font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">Technical Arsenal</span>
+             <div className="h-[1px] w-8 bg-emerald-500" />
           </div>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 animate-fade-in-up">
-            Technical Expertise
+          <h2 className={`text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight ${mounted ? 'reveal-text' : 'reveal-text-hidden'}`}>
+            Engineered for <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Scale & Performance.</span>
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed px-4">
-            A comprehensive toolkit for building intelligent systems, from foundational programming 
-            languages to advanced machine learning frameworks.
+          
+          <p className={`text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-300 ease-premium ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            A robust toolkit designed to handle complex ML pipelines, scalable backend systems, and responsive user interfaces.
           </p>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-20">
           
-          {/* Programming Languages */}
-          <SkillCategory
-            title="Languages"
+          <SkillGroup
+            title="Core Languages"
             skillList={skills.languages}
-            icon={Code}
+            icon={Terminal}
             delay={0}
           />
           
-          {/* ML Frameworks & Libraries */}
-          <SkillCategory
-            title="ML & Data Science"
+          <SkillGroup
+            title="Intelligence & Data"
             skillList={skills.frameworks}
             icon={Brain}
-            delay={200}
+            delay={150}
           />
           
-          {/* Tools & Technologies */}
-          <SkillCategory
-            title="Tools & Platforms"
+          <SkillGroup
+            title="Infrastructure & Tools"
             skillList={skills.tools}
-            icon={Database}
-            delay={400}
+            icon={Cpu}
+            delay={300}
           />
         </div>
 
-        {/* Learning Section */}
-        <div className="text-center">
-          <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-3xl border border-gray-100 dark:border-gray-700 p-6 sm:p-8 lg:p-12 max-w-5xl mx-auto hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-            <div className="flex justify-center mb-4 sm:mb-6">
-              <div className="p-3 sm:p-4 bg-gradient-to-br from-emerald-100 to-slate-100 dark:from-emerald-900/20 dark:to-slate-900/20 rounded-2xl">
-                <Brain size={28} className="sm:w-8 sm:h-8 text-emerald-600 dark:text-emerald-400" />
-              </div>
-            </div>
-            
-            <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-              Always Learning
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 sm:mb-8 text-base sm:text-lg max-w-3xl mx-auto">
-              The field of machine learning evolves rapidly, and I'm committed to staying at the 
-              forefront of technological advancement. Currently exploring cutting-edge areas in AI and ML.
-            </p>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-              {['Transformers', 'MLOps', 'Docker', 'Kubernetes', 'PyTorch', 'FastAPI'].map((tech, index) => (
-                <div 
-                  key={tech}
-                  className="group cursor-pointer"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="bg-white/90 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-3 sm:px-4 py-2 sm:py-3 rounded-xl font-medium text-center hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 hover:shadow-lg hover:scale-105 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
-                    <span className="text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 text-sm sm:text-base">
-                      {tech}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* "R&D Lab" (Formerly Learning) */}
+        <div className="relative mt-24">
+           {/* Section Label */}
+           <div className="flex items-center justify-center gap-4 mb-10 opacity-60">
+             <div className="h-[1px] w-12 bg-gray-300 dark:bg-gray-700" />
+             <div className="flex items-center gap-2 text-sm font-mono text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+               <Zap size={14} /> R&D Lab / Current Focus
+             </div>
+             <div className="h-[1px] w-12 bg-gray-300 dark:bg-gray-700" />
+           </div>
+
+           {/* Learning Card */}
+           <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black rounded-3xl border border-dashed border-gray-300 dark:border-gray-700 p-8 sm:p-12 max-w-4xl mx-auto text-center relative overflow-hidden group">
+             
+             {/* Animated Background Scan */}
+             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
+
+             <div className="flex justify-center mb-6">
+               <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse-soft">
+                 <GitBranch size={32} className="text-gray-600 dark:text-gray-300" />
+               </div>
+             </div>
+             
+             <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+               Exploring the Frontier
+             </h3>
+             <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
+               I am currently deep-diving into <span className="text-emerald-600 dark:text-emerald-400 font-medium">Agentic AI Workflows</span> and <span className="text-emerald-600 dark:text-emerald-400 font-medium">Model Context Protocols (MCP)</span> to build the next generation of autonomous software agents.
+             </p>
+             
+             <div className="flex flex-wrap justify-center gap-3">
+               {['Rust', 'WebAssembly', 'MCP', 'Agentic Workflows', 'System Design'].map((tech, index) => (
+                 <span 
+                   key={tech}
+                   className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                 >
+                   {tech}
+                 </span>
+               ))}
+             </div>
+           </div>
         </div>
+
       </div>
+
+      {/* Bottom Vignette */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white via-white/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/50 dark:to-transparent z-10 pointer-events-none" />
     </section>
   );
 };

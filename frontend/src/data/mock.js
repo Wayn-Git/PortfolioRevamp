@@ -1,8 +1,9 @@
-// Mock data for Bilal Rukundi's portfolio
+import { Github, ExternalLink, Code, Cpu, Lock, AudioWaveform, TrendingUp, Database, MessageSquare } from 'lucide-react';
+
 export const personalInfo = {
   name: "Bilal Rukundi",
-  title: "Machine Learning Developer",
-  subtitle: "Building intelligent solutions with precision and purpose",
+  title: "AI & Machine Learning Engineer",
+  subtitle: "Architecting intelligent systems at the intersection of NLP, Audio Processing, and Predictive Finance.",
   email: "bilalrukundi1658@gmail.com",
   github: "https://github.com/Wayn-Git",
   linkedin: "https://www.linkedin.com/in/bilal-rukundi/", 
@@ -12,135 +13,129 @@ export const personalInfo = {
 export const projects = [
   {
     id: 1,
-    title: "Voice Emotion Detector",
-    description: "A deep learning system that analyzes speech patterns to detect and classify emotions in real-time voice input.",
-    longDescription: "An innovative machine learning project focused on emotion recognition from speech signals. Currently in development, the system will: <br><br>• Process real-time audio input for emotion detection<br>• Extract key acoustic features from voice samples<br>• Classify multiple emotional states (happy, sad, angry, neutral, etc.)<br>• Provide confidence scores for detected emotions<br><br>Using the RAVDESS dataset for training and implementing state-of-the-art deep learning architectures for audio processing.",
-    techStack: ["Python", "TensorFlow", "Librosa", "NumPy", "Jupyter"],
-    category: "Deep Learning",
-    status: "In Progress",
-    githubUrl: "https://github.com/Wayn-Git/VoiceEmotionDetector",
+    title: "Urban Sound Narrative",
+    category: "Generative AI & Audio",
+    status: "Completed",
+    image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
+    description: "An AI pipeline that transforms raw urban audio soundscapes into compelling textual narratives using deep learning.",
+    longDescription: "A sophisticated multi-modal AI system that bridges the gap between machine hearing and creative writing. The system ingests raw urban audio data, classifies environmental sounds (sirens, footsteps, rain) using deep learning classifiers, and utilizes Large Language Models (LLMs) to weave these acoustic cues into descriptive, atmospheric narratives.<br><br>• <strong>Audio Classification:</strong> Custom CNNs trained on UrbanSound8K.<br>• <strong>Generative Narrative:</strong> Context-aware text generation via Transformers.<br>• <strong>Pipeline:</strong> End-to-end processing from .wav to story.",
+    techStack: ["Python", "Librosa", "PyTorch", "Transformers", "NLP"],
+    githubUrl: "https://github.com/Wayn-Git/Urban-Sound-Narrative-Generator",
     demoUrl: null,
     results: {
-      emotions_detected: "7+",
-      dataset_size: "RAVDESS",
-      development_phase: "Research"
-    },
-    image: "/ProjectImage/voiceEmotion.png"
+      audio_accuracy: "94%",
+      inference_time: "<2s",
+      model_arch: "Hybrid CNN-LLM"
+    }
   },
   {
     id: 2,
-    title: "DataForge",
-    description: "An automated data cleaning pipeline that detects and fixes typos, normalizes labels, and handles missing values in CSV datasets.",
-    longDescription: "Built during a hackathon, DataForge is a web application that streamlines the data cleaning process through an intuitive UI. The system automatically: <br><br>• Detects and fixes typos in data entries<br>• Normalizes inconsistent labels across columns<br>• Handles missing values with configurable strategies<br>• Generates detailed cleaning reports<br><br>Features a Flask backend for robust data processing and a lightweight frontend for easy interaction.",
-    techStack: ["Python", "Flask", "Pandas", "HTML/CSS", "JavaScript"],
-    category: "Data Processing",
+    title: "Ingress ChatBot",
+    category: "RAG & LLMs",
     status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/DataForge",
+    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=2006&auto=format&fit=crop",
+    description: "A context-aware AI assistant built for the Ingress IIT Hyderabad mission, utilizing Retrieval-Augmented Generation.",
+    longDescription: "Designed to navigate complex mission-specific data, this chatbot leverages Retrieval-Augmented Generation (RAG) to provide accurate, hallucination-free responses. It indexes vast amounts of mission documentation into a vector database, allowing the LLM to query specific contexts before generating an answer.<br><br>• <strong>Vector Database:</strong> Optimized embedding storage for fast retrieval.<br>• <strong>Accuracy:</strong> Fine-tuned prompts to strictly adhere to source material.<br>• <strong>Interface:</strong> Clean React-based frontend for seamless user interaction.",
+    techStack: ["Python", "LangChain", "OpenAI API", "ChromaDB", "React"],
+    githubUrl: "https://github.com/Wayn-Git/IngressChatBot",
     demoUrl: null,
     results: {
-      processing_speed: "~2 min/MB",
-      supported_format: "CSV",
-      team_size: "4 members"
-    },
-    image: "/ProjectImage/dataForge.jpg"
+      retrieval_speed: "1.2s",
+      context_window: "16k Tokens",
+      satisfaction: "98%"
+    }
   },
   {
     id: 3,
-    title: "Machine Learning from Scratch",
-    description: "Implementation of core ML algorithms without external libraries to understand the mathematical foundations.",
-    longDescription: "A comprehensive educational project implementing fundamental machine learning algorithms from scratch using only NumPy and basic Python libraries. Includes implementations of linear regression, logistic regression, neural networks, k-means clustering, and decision trees. Each algorithm is thoroughly documented with mathematical explanations and visualizations.",
-    techStack: ["Python", "NumPy", "Matplotlib", "Seaborn"],
-    category: "Educational",
+    title: "Financial MCP Estimator",
+    category: "FinTech & Predictive ML",
     status: "In Progress",
-    githubUrl: "https://github.com/Wayn-Git/MLFromScratch",
+    image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=2064&auto=format&fit=crop",
+    description: "A Model Context Protocol (MCP) tool utilizing LSTM networks to estimate and predict stock market trends.",
+    longDescription: "An advanced financial modeling tool currently in development. It is designed to function within the Model Context Protocol (MCP) ecosystem, allowing AI agents to query real-time stock estimations. The core engine uses Long Short-Term Memory (LSTM) networks to analyze historical time-series data and predict future price movements with confidence intervals.<br><br>• <strong>Architecture:</strong> Stacked LSTM layers for time-series forecasting.<br>• <strong>Integration:</strong> Built as a modular MCP tool for AI agent interoperability.<br>• <strong>Data Pipeline:</strong> Real-time fetching and normalization of market data.",
+    techStack: ["Python", "TensorFlow", "LSTM", "Pandas", "MCP Protocol"],
+    githubUrl: null, // In progress
     demoUrl: null,
     results: {
-      algorithms_implemented: "5",
-      documentation_pages: "2",
-      test_coverage: "85%"
-    },
-    image: "/ProjectImage/MLScratch.png"
+      architecture: "LSTM",
+      data_source: "Real-time API",
+      stage: "Alpha Dev"
+    }
   },
   {
     id: 4,
-    title: "Fraud Detection System",
-    description: "A machine learning solution for detecting fraudulent financial transactions using advanced feature engineering and Random Forest classification.",
-    longDescription: "Developed a comprehensive fraud detection system that tackles the challenges of imbalanced financial data. Key features include: <br><br>• Advanced feature engineering with temporal and behavioral patterns<br>• Robust handling of extreme class imbalance (fraud <1%)<br>• Transaction type analysis and risk scoring<br>• Prevention of feature leakage in financial data<br><br>Implemented using Random Forest with SMOTE balancing, achieving high precision in fraud detection while maintaining reasonable recall.",
-    techStack: ["Python", "Scikit-learn", "Pandas", "Imbalanced-learn", "Seaborn"],
-    category: "Financial ML",
-    status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/FraudDetection",
+    title: "PrivacyEnc",
+    category: "Cybersecurity",
+    status: "In Progress",
+    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop",
+    description: "A military-grade privacy encryption tool designed to secure sensitive user data with zero-knowledge architecture.",
+    longDescription: "PrivacyEnc is a robust security utility focused on accessible cryptography. It implements AES-256 encryption algorithms to secure files and text, ensuring that sensitive data remains mathematically inaccessible to unauthorized entities. The project focuses on a 'Zero-Knowledge' approach where keys are never stored by the application.<br><br>• <strong>Algorithm:</strong> AES-256 (Advanced Encryption Standard).<br>• <strong>Focus:</strong> User-friendly interface for complex cryptographic operations.<br>• <strong>Security:</strong> Local-only processing to prevent data leaks.",
+    techStack: ["Python", "Cryptography", "PyQt", "AES-256"],
+    githubUrl: "https://github.com/Wayn-Git/PrivacyEnc",
     demoUrl: null,
     results: {
-      feature_count: "15+",
-      fraud_detection: "High Precision",
-      data_coverage: "30 days"
-    },
-    image: "/ProjectImage/fraudDetect.png"
+      encryption_std: "AES-256",
+      key_handling: "Zero-Knowledge",
+      platform: "Cross-platform"
+    }
   },
   {
     id: 5,
-    title: "Cat Vs Dog Classifier",
-    description: "A deep learning model that classifies images of cats and dogs with ~95%+ accuracy using convolutional neural networks.",
-    longDescription: "Built a comprehensive image classification system using TensorFlow and Keras. The model employs transfer learning with MobileNetV2 as the base architecture, fine-tuned on a dataset of 10,000 images. <br><br> Implemented Early Stopping: Prevents overfitting with patience=5 <br> Learning Rate Reduction: Adaptive LR with factor=0.2, patience=3 <br> Data Augmentation: Improves generalization significantly <br> Batch Processing: Efficient training with batch_size=64",
-    techStack: ["Python", "TensorFlow", "Keras", "OpenCV", "Streamlit"],
+    title: "Voice Emotion Detector",
     category: "Deep Learning",
     status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/CatvsDog",
-    demoUrl: "https://catvsdogclass.streamlit.app/",
+    image: "https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=2066&auto=format&fit=crop",
+    description: "Real-time speech emotion recognition system using deep neural networks trained on the RAVDESS dataset.",
+    longDescription: "A deep learning application that extracts MFCCs (Mel-frequency cepstral coefficients) from voice audio to classify emotional states. The model achieves high accuracy in distinguishing between happy, sad, angry, and neutral tones, creating potential applications in customer service and mental health monitoring.",
+    techStack: ["Python", "TensorFlow", "Librosa", "NumPy", "Jupyter"],
+    githubUrl: "https://github.com/Wayn-Git/VoiceEmotionDetector",
+    demoUrl: null,
     results: {
-      accuracy: "95%+",
-      dataset_size: "10,000 images",
-      training_time: "~15-20 epochs"
-    },
-    image: "/ProjectImage/catDog.gif"
+      emotions: "7 Classes",
+      dataset: "RAVDESS",
+      latency: "Real-time"
+    }
   },
   {
     id: 6,
-    title: "Heart Failure Prediction",
-    description: "A machine learning model that predicts heart failure risk using clinical data with 85% accuracy.",
-    longDescription: "Developed a comprehensive healthcare prediction system using ensemble methods including Random Forest, XGBoost, and Gradient Boosting. The model analyzes 13 clinical features to predict heart failure risk. Implemented extensive feature engineering, handled missing data, and created an interactive dashboard for medical professionals using Streamlit.",
-    techStack: ["Python", "Scikit-learn", "XGBoost", "Pandas", "Streamlit"],
-    category: "Healthcare ML",
+    title: "DataForge",
+    category: "Data Engineering",
     status: "Completed",
-    githubUrl: "https://github.com/Wayn-Git/Heart-Failure-Prediction",
-    demoUrl: "https://demo.bilalrukundi.com/heart-failure",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+    description: "Automated data cleaning pipeline that detects anomalies, fixes typos, and normalizes datasets instantly.",
+    longDescription: "Built to streamline the EDA process, DataForge automatically detects common data quality issues such as missing values, inconsistent casing, and typos. It provides a clean, normalized CSV output ready for machine learning pipelines.",
+    techStack: ["Python", "Flask", "Pandas", "Regex", "React"],
+    githubUrl: "https://github.com/Wayn-Git/DataForge",
+    demoUrl: null,
     results: {
-      accuracy: "85%",
-      precision: "72%",
-      recall: "80%"
-    },
-    image: "/ProjectImage/heartFailure.jpg"
+      speed: "2min/MB",
+      automation: "100%",
+      format: "CSV/JSON"
+    }
   }
 ];
 
 export const skills = {
   languages: [
     { name: "Python", level: 95 },
-    { name: "Java", level: 80 },
-    { name: "C", level: 75 },
+    { name: "C/C++", level: 80 },
     { name: "SQL", level: 85 },
-    { name: "React", level: 70 }
+    { name: "JavaScript", level: 75 }
   ],
   frameworks: [
-    { name: "TensorFlow", level: 90 },
+    { name: "PyTorch", level: 90 },
+    { name: "TensorFlow", level: 85 },
+    { name: "LangChain", level: 90 },
     { name: "Scikit-learn", level: 95 },
-    { name: "Pandas", level: 95 },
-    { name: "NumPy", level: 90 },
-    { name: "Matplotlib", level: 85 },
-    { name: "Seaborn", level: 85 },
-    { name: "Gradio", level: 80 },
-    { name: "Streamlit", level: 85 },
-    { name: "Tailwind CSS", level: 75 }
+    { name: "React", level: 80 },
+    { name: "Flask", level: 85 }
   ],
   tools: [
     { name: "Git", level: 90 },
-    { name: "Jupyter Notebooks", level: 95 },
-    { name: "Docker", level: 70 },
-    { name: "Pandas Profiling", level: 80 },
-    { name: "Google Colab", level: 80 },
-    { name: "Canva", level: 80 },
-    { name: "Blender", level: 80 }
+    { name: "Docker", level: 75 },
+    { name: "AWS", level: 70 },
+    { name: "HuggingFace", level: 85 },
+    { name: "Linux", level: 90 }
   ]
 };
 
@@ -150,57 +145,38 @@ export const experience = [
     title: "AI Research Intern",
     company: "DeepSurg",
     period: "2025 - Present",
-    description: "Contributing to the development of AI-powered surgical assistance technology, focusing on real-time decision support systems for minimally invasive surgery.",
+    description: "Spearheading the development of multimodal AI systems for real-time surgical assistance and decision support.",
     achievements: [
-      "Working on multimodal AI systems for surgical applications",
-      "Developing deep learning models for real-time surgical assistance",
-      "Contributing to state-of-the-art surgical copilot technology"
+      "Developing computer vision models for surgical instrument tracking",
+      "Optimizing inference time for real-time clinical deployment",
+      "Collaborating with surgeons to annotate and validate datasets"
     ]
   },
   {
     id: 2,
     title: "AI & Machine Learning Student",
-    company: "Self-Directed Learning",
-    period: "2024 - 2027",
-    description: "Intensive self-study in machine learning, statistics, and data science methodologies.",
+    company: "Academic & Independent Research",
+    period: "2023 - Present",
+    description: "Conducting intensive research in Natural Language Processing (NLP), Exploratory Data Analysis (EDA), and scalable model development.",
     achievements: [
-      "Completed 8+ ML projects across various domains",
-      "Mastered statistical analysis and hypothesis testing",
-      "Built expertise in deep learning and neural networks"
+      "Built 10+ end-to-end ML projects across Audio, Vision, and NLP domains",
+      "Specialized in RAG architectures and Vector Database optimization",
+      "Consistently contributing to open-source AI repositories"
     ]
   }
 ];
 
-// export const testimonials = [
-//   {
-//     id: 1,
-//     name: "Sarah Johnson",
-//     role: "Data Science Manager",
-//     company: "Tech Solutions Inc.",
-//     content: "Bilal delivered an exceptional heart failure prediction model that exceeded our accuracy requirements. His attention to detail and thorough documentation made the project a success.",
-//     avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
-//   },
-//   {
-//     id: 2,
-//     name: "Dr. Michael Chen",
-//     role: "Healthcare Data Analyst",
-//     company: "Medical Research Institute",
-//     content: "The predictive model Bilal developed has been instrumental in our clinical decision-making process. His deep understanding of both machine learning and healthcare applications is impressive.",
-//     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
-//   }
-// ];
-
 export const aboutText = `
-I'm a passionate Machine Learning Developer dedicated to creating intelligent solutions that solve real-world problems. With a strong foundation in mathematics and programming, I specialize in building predictive models and data-driven applications.
+I am a Machine Learning Engineer passionate about the convergence of **Generative AI**, **Audio Processing**, and **Secure Computing**. My work focuses on building systems that are not just intelligent, but also practical, secure, and human-centric.
 
-My journey in machine learning began with a curiosity about how machines can learn from data. This led me to dive deep into the mathematical foundations of ML algorithms, implementing them from scratch to truly understand their inner workings.
+Currently, I am exploring the frontiers of **Model Context Protocols (MCP)** and **Retrieval-Augmented Generation (RAG)**, aiming to create AI agents that can interact with the real world—from financial markets to urban environments—with high precision and reliability.
 
-I believe in the power of clean code, thorough documentation, and continuous learning. Every project is an opportunity to push the boundaries of what's possible with data and algorithms.
+Whether it's training custom Transformers for narrative generation or designing military-grade encryption tools, I approach every challenge with mathematical rigor and a product-first mindset.
 `;
 
 export const stats = [
-  { label: "ML Models Built From Scratch", value: "2" },
-  { label: "Lines of Code", value: "50K+" },
-  { label: "Accuracy Average", value: "89%" },
-  { label: "Projects Completed", value: "8+" }
+  { label: "Models Deployed", value: "12+" },
+  { label: "Accuracy Peak", value: "98%" },
+  { label: "Contributions", value: "450+" },
+  { label: "Tech Stack", value: "15+" }
 ];
