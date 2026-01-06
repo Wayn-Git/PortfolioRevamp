@@ -175,7 +175,7 @@ Whether it's training custom Transformers for narrative generation or designing 
 `;
 
 export const stats = [
-  { label: "Models Deployed", value: "12+" },
+  { label: "Models Deployed", value: "5+" },
   { label: "Accuracy Peak", value: "98%" },
   { label: "Contributions", value: "450+" },
   { label: "Tech Stack", value: "15+" }

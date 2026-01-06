@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Download, Moon, Sun } from 'lucide-react';
-import { personalInfo } from '../data/mock';
+import { personalInfo, experience } from '../data/mock';
 import { useTheme } from '../context/ThemeContext';
 
 const Header = () => {
@@ -39,6 +39,7 @@ const Header = () => {
 
   const navItems = [
     { label: 'Home', id: 'hero' },
+    { label: 'Experience', id: 'experience'},
     { label: 'Projects', id: 'projects' },
     { label: 'Skills', id: 'skills' },
     { label: 'Contact', id: 'contact' }

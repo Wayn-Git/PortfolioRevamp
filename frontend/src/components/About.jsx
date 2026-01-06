@@ -229,7 +229,7 @@ const About = () => {
           </div>
 
           {/* New Experience Timeline */}
-          <div className="lg:col-span-7">
+          <div id="experience" className="lg:col-span-7">
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
               <Calendar className="text-emerald-500" />
               Experience
