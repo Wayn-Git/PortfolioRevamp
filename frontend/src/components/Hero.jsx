@@ -28,18 +28,7 @@ const Hero = () => {
 
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center">
         
-        {/* Status Badge - Bouncy Entrance */}
-        <div className={`flex justify-center mb-8 transition-all duration-1000 ease-premium ${mounted ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-90'}`}>
-          <div className="group relative inline-flex items-center px-4 py-1.5 rounded-full border border-emerald-100 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 text-xs font-medium tracking-wide overflow-hidden cursor-default transition-transform hover:scale-105 duration-300">
-            <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="relative z-10">OPEN TO WORK</span>
-            {/* Shimmer on hover */}
-            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
-          </div>
-        </div>
+
 
         {/* Main Typography - Deep Staggered Reveal */}
         <div className="space-y-4 mb-8">

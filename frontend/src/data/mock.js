@@ -1,99 +1,127 @@
-import { Github, ExternalLink, Code, Cpu, Lock, AudioWaveform, TrendingUp, Database, MessageSquare } from 'lucide-react';
+import {
+  Github,
+  ExternalLink,
+  Cpu,
+  Lock,
+  AudioWaveform,
+  TrendingUp,
+  Database,
+  MessageSquare
+} from "lucide-react";
+
+/* =======================
+   PERSONAL INFO
+======================= */
 
 export const personalInfo = {
   name: "Bilal Rukundi",
   title: "AI & Machine Learning Engineer",
-  subtitle: "Architecting intelligent systems at the intersection of NLP, Audio Processing, and Predictive Finance.",
+  subtitle:
+    "Building practical AI systems across NLP, audio processing, and data-driven prediction.",
   email: "bilalrukundi1658@gmail.com",
   github: "https://github.com/Wayn-Git",
-  linkedin: "https://www.linkedin.com/in/bilal-rukundi/", 
-  cvUrl: "/ResumeUpdated.pdf" 
+  linkedin: "https://www.linkedin.com/in/bilal-rukundi/",
+  cvUrl: "/ResumeUpdated.pdf"
 };
+
+/* =======================
+   PROJECTS
+======================= */
 
 export const projects = [
   {
     id: 1,
-    title: "Urban Sound Narrative",
-    category: "Generative AI & Audio",
+    title: "Sound Script",
+    category: "Audio ML & NLP",
     status: "Completed",
-    image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
-    description: "An AI pipeline that transforms raw urban audio soundscapes into compelling textual narratives using deep learning.",
-    longDescription: "A sophisticated multi-modal AI system that bridges the gap between machine hearing and creative writing. The system ingests raw urban audio data, classifies environmental sounds (sirens, footsteps, rain) using deep learning classifiers, and utilizes Large Language Models (LLMs) to weave these acoustic cues into descriptive, atmospheric narratives.<br><br>• <strong>Audio Classification:</strong> Custom CNNs trained on UrbanSound8K.<br>• <strong>Generative Narrative:</strong> Context-aware text generation via Transformers.<br>• <strong>Pipeline:</strong> End-to-end processing from .wav to story.",
-    techStack: ["Python", "Librosa", "PyTorch", "Transformers", "NLP"],
+    image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1600&q=80",
+    description:
+      "An audio-to-text pipeline that converts urban sound recordings into short descriptive summaries.",
+    longDescription:
+      "Sound Script explores how environmental audio can be interpreted and translated into natural language. Audio clips are processed to extract features and classify sound categories such as sirens, rain, or footsteps. These predictions are then mapped to simple textual descriptions, focusing on the end-to-end audio understanding pipeline.",
+    techStack: ["Python", "Librosa", "PyTorch", "Transformers"],
     githubUrl: "https://github.com/Wayn-Git/Urban-Sound-Narrative-Generator",
-    demoUrl: null,
+    demoUrl: "https://soundscript-pi.vercel.app/",
     results: {
-      audio_accuracy: "94%",
-      inference_time: "<2s",
-      model_arch: "Hybrid CNN-LLM"
+      classification: "Urban sound categories",
+      accuracy: "70–80% (classification)",
+      output: "Text summaries"
     }
   },
   {
     id: 2,
     title: "Ingress ChatBot",
-    category: "RAG & LLMs",
+    category: "RAG & LLM Applications",
     status: "Completed",
-    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=2006&auto=format&fit=crop",
-    description: "A context-aware AI assistant built for the Ingress IIT Hyderabad mission, utilizing Retrieval-Augmented Generation.",
-    longDescription: "Designed to navigate complex mission-specific data, this chatbot leverages Retrieval-Augmented Generation (RAG) to provide accurate, hallucination-free responses. It indexes vast amounts of mission documentation into a vector database, allowing the LLM to query specific contexts before generating an answer.<br><br>• <strong>Vector Database:</strong> Optimized embedding storage for fast retrieval.<br>• <strong>Accuracy:</strong> Fine-tuned prompts to strictly adhere to source material.<br>• <strong>Interface:</strong> Clean React-based frontend for seamless user interaction.",
+    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1600&q=80",
+    description:
+      "A document-aware chatbot using Retrieval-Augmented Generation for grounded responses.",
+    longDescription:
+      "This project was built to experiment with Retrieval-Augmented Generation (RAG). Mission-related documents are chunked, embedded, and stored in a vector database. When a user asks a question, relevant context is retrieved and passed to the language model, helping reduce unsupported or hallucinated answers.",
     techStack: ["Python", "LangChain", "OpenAI API", "ChromaDB", "React"],
     githubUrl: "https://github.com/Wayn-Git/IngressChatBot",
     demoUrl: null,
     results: {
-      retrieval_speed: "1.2s",
-      context_window: "16k Tokens",
-      satisfaction: "98%"
+      retrieval: "Vector-based search",
+      latency: "~1–2 seconds",
+      focus: "Context-grounded answers"
     }
   },
   {
     id: 3,
     title: "Financial MCP Estimator",
-    category: "FinTech & Predictive ML",
-    status: "In Progress",
-    image: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=2064&auto=format&fit=crop",
-    description: "A Model Context Protocol (MCP) tool utilizing LSTM networks to estimate and predict stock market trends.",
-    longDescription: "An advanced financial modeling tool currently in development. It is designed to function within the Model Context Protocol (MCP) ecosystem, allowing AI agents to query real-time stock estimations. The core engine uses Long Short-Term Memory (LSTM) networks to analyze historical time-series data and predict future price movements with confidence intervals.<br><br>• <strong>Architecture:</strong> Stacked LSTM layers for time-series forecasting.<br>• <strong>Integration:</strong> Built as a modular MCP tool for AI agent interoperability.<br>• <strong>Data Pipeline:</strong> Real-time fetching and normalization of market data.",
-    techStack: ["Python", "TensorFlow", "LSTM", "Pandas", "MCP Protocol"],
-    githubUrl: null, // In progress
-    demoUrl: null,
+    category: "Time Series & Predictive ML",
+    status: "Completed",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1600&q=80",
+    description:
+      "A time-series forecasting project using LSTM models to study stock price trends.",
+    longDescription:
+      "This project focuses on understanding time-series modeling using LSTM networks. Historical market data is used to predict short-term price movements. It also experiments with exposing predictions as callable tools within a Model Context Protocol (MCP) setup.",
+    techStack: ["Python", "TensorFlow", "LSTM", "Pandas"],
+    githubUrl: "https://github.com/Wayn-Git/financial-mcp",
+    demoUrl: "https://financial-mcp-vert.vercel.app/",
     results: {
-      architecture: "LSTM",
-      data_source: "Real-time API",
-      stage: "Alpha Dev"
+      model: "LSTM",
+      data: "Historical stock data",
+      status: "Experimental"
     }
   },
   {
     id: 4,
     title: "PrivacyEnc",
-    category: "Cybersecurity",
+    category: "Applied Cryptography",
     status: "In Progress",
-    image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop",
-    description: "A military-grade privacy encryption tool designed to secure sensitive user data with zero-knowledge architecture.",
-    longDescription: "PrivacyEnc is a robust security utility focused on accessible cryptography. It implements AES-256 encryption algorithms to secure files and text, ensuring that sensitive data remains mathematically inaccessible to unauthorized entities. The project focuses on a 'Zero-Knowledge' approach where keys are never stored by the application.<br><br>• <strong>Algorithm:</strong> AES-256 (Advanced Encryption Standard).<br>• <strong>Focus:</strong> User-friendly interface for complex cryptographic operations.<br>• <strong>Security:</strong> Local-only processing to prevent data leaks.",
-    techStack: ["Python", "Cryptography", "PyQt", "AES-256"],
+    image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1600&q=80",
+    description:
+      "A desktop utility for encrypting files and text using standard cryptographic algorithms.",
+    longDescription:
+      "PrivacyEnc is a learning-focused security project that implements AES-based encryption for local file and text protection. The emphasis is on correct cryptographic usage, local-only processing, and understanding key handling.",
+    techStack: ["Python", "Cryptography", "PyQt"],
     githubUrl: "https://github.com/Wayn-Git/PrivacyEnc",
     demoUrl: null,
     results: {
-      encryption_std: "AES-256",
-      key_handling: "Zero-Knowledge",
-      platform: "Cross-platform"
+      encryption: "AES-based",
+      processing: "Local only",
+      focus: "Applied security fundamentals"
     }
   },
   {
     id: 5,
     title: "Voice Emotion Detector",
-    category: "Deep Learning",
+    category: "Speech & Deep Learning",
     status: "Completed",
-    image: "https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=2066&auto=format&fit=crop",
-    description: "Real-time speech emotion recognition system using deep neural networks trained on the RAVDESS dataset.",
-    longDescription: "A deep learning application that extracts MFCCs (Mel-frequency cepstral coefficients) from voice audio to classify emotional states. The model achieves high accuracy in distinguishing between happy, sad, angry, and neutral tones, creating potential applications in customer service and mental health monitoring.",
-    techStack: ["Python", "TensorFlow", "Librosa", "NumPy", "Jupyter"],
+    image: "https://images.unsplash.com/photo-1590650153855-d9e808231d41?w=1600&q=80",
+    description:
+      "A speech emotion recognition system trained on labeled voice datasets.",
+    longDescription:
+      "This project classifies emotional states from speech audio using extracted MFCC features and deep learning models. It was built to understand speech preprocessing, dataset handling, and evaluation of audio-based classifiers.",
+    techStack: ["Python", "TensorFlow", "Librosa", "NumPy"],
     githubUrl: "https://github.com/Wayn-Git/VoiceEmotionDetector",
     demoUrl: null,
     results: {
-      emotions: "7 Classes",
       dataset: "RAVDESS",
-      latency: "Real-time"
+      output: "Emotion labels",
+      focus: "Speech classification"
     }
   },
   {
@@ -101,82 +129,115 @@ export const projects = [
     title: "DataForge",
     category: "Data Engineering",
     status: "Completed",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    description: "Automated data cleaning pipeline that detects anomalies, fixes typos, and normalizes datasets instantly.",
-    longDescription: "Built to streamline the EDA process, DataForge automatically detects common data quality issues such as missing values, inconsistent casing, and typos. It provides a clean, normalized CSV output ready for machine learning pipelines.",
-    techStack: ["Python", "Flask", "Pandas", "Regex", "React"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
+    description:
+      "A utility that automates common data cleaning and preprocessing tasks.",
+    longDescription:
+      "DataForge simplifies early-stage data preparation by handling missing values, text normalization, and basic consistency checks. The cleaned output can be directly used for analysis or machine learning pipelines.",
+    techStack: ["Python", "Flask", "Pandas", "Regex"],
     githubUrl: "https://github.com/Wayn-Git/DataForge",
     demoUrl: null,
     results: {
-      speed: "2min/MB",
-      automation: "100%",
-      format: "CSV/JSON"
+      input: "Raw CSV data",
+      output: "Cleaned datasets",
+      focus: "EDA automation"
     }
   }
 ];
 
+/* =======================
+   SKILLS
+======================= */
+
 export const skills = {
   languages: [
-    { name: "Python", level: 95 },
-    { name: "C/C++", level: 80 },
+    { name: "Python", level: 90 },
+    { name: "C/C++", level: 75 },
     { name: "SQL", level: 85 },
-    { name: "JavaScript", level: 75 }
+    { name: "JavaScript", level: 70 },
+    { name: "Java", level: 20 }
   ],
   frameworks: [
-    { name: "PyTorch", level: 90 },
-    { name: "TensorFlow", level: 85 },
-    { name: "LangChain", level: 90 },
-    { name: "Scikit-learn", level: 95 },
-    { name: "React", level: 80 },
-    { name: "Flask", level: 85 }
+    { name: "PyTorch", level: 88 },
+    { name: "TensorFlow", level: 82 },
+    { name: "LangChain", level: 85 },
+    { name: "Scikit-learn", level: 92 },
+    { name: "React", level: 75 },
+    { name: "FastAPI", level: 85 }
+  ],
+  libraries: [
+    { name: "NumPy", level: 92 },
+    { name: "Pandas", level: 90 },
+    { name: "Matplotlib", level: 85 },
+    { name: "Seaborn", level: 82 },
+    { name: "SciPy", level: 75 },
+    { name: "NLTK", level: 80 },
+    { name: "spaCy", level: 78 },
+    { name: "TextBlob", level: 85 },
+    { name: "OpenCV", level: 75 },
+    { name: "MediaPipe", level: 72 }
   ],
   tools: [
     { name: "Git", level: 90 },
-    { name: "Docker", level: 75 },
-    { name: "AWS", level: 70 },
-    { name: "HuggingFace", level: 85 },
-    { name: "Linux", level: 90 }
+    { name: "Docker", level: 72 },
+    { name: "AWS", level: 68 },
+    { name: "Hugging Face", level: 85 },
+    { name: "Linux", level: 88 }
   ]
 };
+
+/* =======================
+   EXPERIENCE
+======================= */
 
 export const experience = [
   {
     id: 1,
     title: "AI Research Intern",
     company: "DeepSurg",
-    period: "2025 - Present",
-    description: "Spearheading the development of multimodal AI systems for real-time surgical assistance and decision support.",
+    period: "2025 – Present",
+    description:
+      "Working on multimodal AI systems for surgical assistance and decision support.",
     achievements: [
       "Developing computer vision models for surgical instrument tracking",
-      "Optimizing inference time for real-time clinical deployment",
-      "Collaborating with surgeons to annotate and validate datasets"
+      "Improving inference efficiency for real-time usage",
+      "Collaborating with clinicians to validate annotated datasets"
     ]
   },
   {
     id: 2,
     title: "AI & Machine Learning Student",
-    company: "Academic & Independent Research",
-    period: "2023 - Present",
-    description: "Conducting intensive research in Natural Language Processing (NLP), Exploratory Data Analysis (EDA), and scalable model development.",
+    company: "Academic & Independent Projects",
+    period: "2023 – Present",
+    description:
+      "Hands-on learning and experimentation across machine learning, NLP, audio processing, and data engineering.",
     achievements: [
-      "Built 10+ end-to-end ML projects across Audio, Vision, and NLP domains",
-      "Specialized in RAG architectures and Vector Database optimization",
-      "Consistently contributing to open-source AI repositories"
+      "Built multiple end-to-end ML projects across audio, NLP, and time-series",
+      "Explored RAG pipelines and vector database usage",
+      "Actively contributing to open-source and personal research projects"
     ]
   }
 ];
 
+/* =======================
+   ABOUT
+======================= */
+
 export const aboutText = `
-I am a Machine Learning Engineer passionate about the convergence of **Generative AI**, **Audio Processing**, and **Secure Computing**. My work focuses on building systems that are not just intelligent, but also practical, secure, and human-centric.
+I’m a Machine Learning Engineer with a strong interest in Generative AI, audio-based systems, and applied security. I enjoy building systems that are technically sound, practical to use, and grounded in real-world data.
 
-Currently, I am exploring the frontiers of **Model Context Protocols (MCP)** and **Retrieval-Augmented Generation (RAG)**, aiming to create AI agents that can interact with the real world—from financial markets to urban environments—with high precision and reliability.
+Currently, I’m exploring Retrieval-Augmented Generation (RAG) and Model Context Protocols (MCP), focusing on how AI systems can interact more reliably with external data sources such as documents, financial data, and APIs.
 
-Whether it's training custom Transformers for narrative generation or designing military-grade encryption tools, I approach every challenge with mathematical rigor and a product-first mindset.
+My approach emphasizes strong fundamentals, careful experimentation, and learning through building end-to-end systems.
 `;
 
+/* =======================
+   STATS
+======================= */
+
 export const stats = [
-  { label: "Models Deployed", value: "5+" },
-  { label: "Accuracy Peak", value: "98%" },
-  { label: "Contributions", value: "450+" },
-  { label: "Tech Stack", value: "15+" }
+  { label: "Projects Built", value: "6+" },
+  { label: "Domains Covered", value: "Audio, NLP, Data" },
+  { label: "Open Source Repos", value: "10+" },
+  { label: "Core Stack", value: "Python / ML / NLP" }
 ];
